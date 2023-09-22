@@ -36,5 +36,16 @@ public class Movie {
     )
     private List<Performance> performances = new ArrayList<>();
 
+    public Movie(String title, String description, int year) {
+        this.title = title;
+        this.description = description;
+        this.year = year;
+    }
 
+    public Movie(String title, String description, int year, List<Performance> performances) {
+        this.title = title;
+        this.description = description;
+        this.year = year;
+        this.performances = performances;
+    }
 }

@@ -31,4 +31,13 @@ public class Room {
             fetch = FetchType.LAZY
     )
     private List<Performance> performances = new ArrayList<>();
+
+    public Room(Long seats) {
+        this.seats = seats;
+    }
+
+    public Room(Long seats, List<Employee> employees) {
+        this.seats = seats;
+        this.employees = employees;
+    }
 }

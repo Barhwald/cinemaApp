@@ -29,5 +29,9 @@ public class Performance {
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 
-
+    public Performance(LocalDateTime dateTime, Movie movie, Room room) {
+        this.dateTime = dateTime;
+        this.movie = movie;
+        this.room = room;
+    }
 }
