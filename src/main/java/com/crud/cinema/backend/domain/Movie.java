@@ -26,7 +26,7 @@ public class Movie {
     private String description;
 
     @Column(name = "YEAR")
-    private int year;
+    private String year;
 
     @OneToMany(
             targetEntity = Performance.class,
@@ -36,13 +36,13 @@ public class Movie {
     )
     private List<Performance> performances = new ArrayList<>();
 
-    public Movie(String title, String description, int year) {
+    public Movie(String title, String description, String year) {
         this.title = title;
         this.description = description;
         this.year = year;
     }
 
-    public Movie(String title, String description, int year, List<Performance> performances) {
+    public Movie(String title, String description, String year, List<Performance> performances) {
         this.title = title;
         this.description = description;
         this.year = year;

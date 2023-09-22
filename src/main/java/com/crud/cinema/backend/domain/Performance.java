@@ -19,7 +19,7 @@ public class Performance {
     private Long id;
 
     @Column(name = "DATE_TIME")
-    private LocalDateTime dateTime;
+    public LocalDateTime dateTime;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "MOVIE_ID")

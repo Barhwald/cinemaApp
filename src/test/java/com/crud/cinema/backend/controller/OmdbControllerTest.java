@@ -26,8 +26,8 @@ public class OmdbControllerTest {
     private OmdbFacade omdbFacade;
 
     @Test
-    void shouldFetchEmptyOmdbMovie() throws Exception {
-        // Given
+    void shouldFetchOmdbMovie() throws Exception {
+        //Given
         OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Some title", "Some plot", "1969", 4.5);
 
         when(omdbFacade.getOmdbMovieByTitle("title")).thenReturn(omdbMovieDto);
@@ -47,4 +47,5 @@ public class OmdbControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Year", Matchers.is("1969")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.imdbRating", Matchers.is(4.5)));
     }
+
 }

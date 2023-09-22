@@ -18,4 +18,7 @@ public class EmployeeDto {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+    public EmployeeDto() {
+    }
 }

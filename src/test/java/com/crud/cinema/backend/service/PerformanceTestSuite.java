@@ -31,7 +31,7 @@ public class PerformanceTestSuite {
         //Given
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
-        Movie movie = new Movie("The Hill", "Yadadadadada", 1994);
+        Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room(120L, List.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
@@ -49,7 +49,7 @@ public class PerformanceTestSuite {
         //Given
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
-        Movie movie = new Movie("The Hill", "Yadadadadada", 1994);
+        Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room(120L, List.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
@@ -70,7 +70,7 @@ public class PerformanceTestSuite {
         //Given
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
-        Movie movie = new Movie("The Hill", "Yadadadadada", 1994);
+        Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room1 = new Room(120L, List.of(employee1, employee2));
         Room room2 = new Room(78L, List.of(employee2));
 
@@ -92,7 +92,7 @@ public class PerformanceTestSuite {
         //Given
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
-        Movie movie = new Movie("The Hill", "Yadadadadada", 1994);
+        Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room(120L, List.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
