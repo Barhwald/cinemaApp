@@ -19,7 +19,7 @@ public class Room {
     private Long id;
 
     @Column(name = "SEATS")
-    private Long seats;
+    private Integer seats;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "rooms")
     public List<Employee> employees = new ArrayList<>();
@@ -32,11 +32,16 @@ public class Room {
     )
     private List<Performance> performances = new ArrayList<>();
 
-    public Room(Long seats) {
+    public Room(Integer seats) {
         this.seats = seats;
     }
 
-    public Room(Long seats, List<Employee> employees) {
+    public Room(Long id, Integer seats) {
+        this.id = id;
+        this.seats = seats;
+    }
+
+    public Room(Integer seats, List<Employee> employees) {
         this.seats = seats;
         this.employees = employees;
     }

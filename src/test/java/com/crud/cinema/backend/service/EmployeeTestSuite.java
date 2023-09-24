@@ -54,9 +54,9 @@ public class EmployeeTestSuite {
     @Test
     void shouldGetAllEmployees() {
         //Given
-        Room room1 = new Room(120L);
-        Room room2 = new Room(150L);
-        Room room3 = new Room(160L);
+        Room room1 = new Room(120);
+        Room room2 = new Room(150);
+        Room room3 = new Room(160);
 
         List<Room> listOne = List.of(room1, room2);
         List<Room> listTwo = List.of(room2, room3);

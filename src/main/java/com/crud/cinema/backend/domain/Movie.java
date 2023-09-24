@@ -42,10 +42,10 @@ public class Movie {
         this.year = year;
     }
 
-    public Movie(String title, String description, String year, List<Performance> performances) {
+    public Movie(Long id, String title, String description, String year) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.year = year;
-        this.performances = performances;
     }
 }

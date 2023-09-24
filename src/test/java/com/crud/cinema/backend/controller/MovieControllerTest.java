@@ -1,8 +1,8 @@
 package com.crud.cinema.backend.controller;
 
 import com.crud.cinema.backend.adapter.LocalDateTimeTypeAdapter;
-import com.crud.cinema.backend.domain.EmployeeDto;
-import com.crud.cinema.backend.facade.EmployeeFacade;
+import com.crud.cinema.backend.domain.MovieDto;
+import com.crud.cinema.backend.facade.MovieFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import org.hamcrest.Matchers;
@@ -25,15 +25,14 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
-@WebMvcTest(EmployeeController.class)
-class EmployeeControllerTest {
+@WebMvcTest(MovieController.class)
+class MovieControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private EmployeeFacade employeeFacade;
-
+    private MovieFacade movieFacade;
     @MockBean
     private LocalDateTimeTypeAdapter localDateTimeTypeAdapter;
     private Gson gson;
@@ -46,59 +45,60 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void shouldFetchEmployee() throws Exception {
+    void shouldFetchMovie() throws Exception {
         //Given
-        EmployeeDto employeeDto = new EmployeeDto(1L, "John", "Feeney");
+        MovieDto movieDto = new MovieDto(1L, "Title", "Descblablabla", "2002");
 
-        when(employeeFacade.getEmployeeWithId(1L)).thenReturn(employeeDto);
-        String jsonContent = gson.toJson(employeeDto);
+        when(movieFacade.getMovieWithId(1L)).thenReturn(movieDto);
+        String jsonContent = gson.toJson(movieDto);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/employees/1")
+                        .get("/v1/movies/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.is("John")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is("Feeney")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Title")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("Descblablabla")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.year", Matchers.is("2002")));
     }
 
     @Test
-    void shouldFetchAllEmployees() throws Exception {
+    void shouldFetchAllMovies() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
-        EmployeeDto employeeDto2 = new EmployeeDto(2L, "John", "Deak");
-        List<EmployeeDto> employeeDtoList = List.of(employeeDto1, employeeDto2);
+        MovieDto movieDto1 = new MovieDto(1L, "Title", "Descblablabla", "2002");
+        MovieDto movieDto2 = new MovieDto(2L, "Title2", "Descblablabla2", "20022");
+        List<MovieDto> movieDtoList = List.of(movieDto1, movieDto2);
 
-        when(employeeFacade.getEmployeesList()).thenReturn(employeeDtoList);
-        String jsonContent = gson.toJson(employeeDtoList);
+        when(movieFacade.getMoviesList()).thenReturn(movieDtoList);
+        String jsonContent = gson.toJson(movieDtoList);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/employees")
+                        .get("/v1/movies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lastName", Matchers.is("Feeney")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lastName", Matchers.is("Deak")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title", Matchers.is("Title")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].title", Matchers.is("Title2")));
     }
 
     @Test
-    void shouldCreateEmployee() throws Exception {
+    void shouldCreateMovie() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
+        MovieDto movieDto1 = new MovieDto(1L, "Title", "Descblablabla", "2002");
 
-        String jsonContent = gson.toJson(employeeDto1);
+        String jsonContent = gson.toJson(movieDto1);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/v1/employees")
+                        .post("/v1/movies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
@@ -108,35 +108,36 @@ class EmployeeControllerTest {
     @Test
     void shouldUpdateEmployee() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
-        EmployeeDto updatedEmployeeDto1 = new EmployeeDto(1L, "James", "Feeney");
+        MovieDto movieDto1 = new MovieDto(1L, "Title", "Descblablabla", "2002");
+        MovieDto updatedMovieDto1 = new MovieDto(1L, "Titlezzzz", "Descblablabla", "2002");
 
-        when(employeeFacade.getEmployeeWithId(1L)).thenReturn(employeeDto1);
-        when(employeeFacade.updateEmployee(any(EmployeeDto.class))).thenReturn(updatedEmployeeDto1);
+        when(movieFacade.getMovieWithId(1L)).thenReturn(movieDto1);
+        when(movieFacade.updateMovie(any(MovieDto.class))).thenReturn(updatedMovieDto1);
 
-        String jsonContent = gson.toJson(updatedEmployeeDto1);
+        String jsonContent = gson.toJson(updatedMovieDto1);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .put("/v1/employees")
+                        .put("/v1/movies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.is("James")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is("Feeney")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title", Matchers.is("Titlezzzz")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("Descblablabla")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.year", Matchers.is("2002")));
     }
 
     @Test
-    void shouldDeleteEmployee() throws Exception {
+    void shouldDeleteMovie() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
+        MovieDto movieDto1 = new MovieDto(1L, "Title", "Descblablabla", "2002");
 
         //When & Then
-        doNothing().when(employeeFacade).deleteEmployee(employeeDto1.getId());
+        doNothing().when(movieFacade).deleteMovie(movieDto1.getId());
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/v1/employees/{id}", employeeDto1.getId()))
+                        .delete("/v1/movies/{id}", movieDto1.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

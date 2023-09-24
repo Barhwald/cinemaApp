@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class EmployeeDto {
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
     private List<Room> rooms;

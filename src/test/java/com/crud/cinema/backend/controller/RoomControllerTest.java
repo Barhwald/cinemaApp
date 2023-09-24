@@ -1,8 +1,8 @@
 package com.crud.cinema.backend.controller;
 
 import com.crud.cinema.backend.adapter.LocalDateTimeTypeAdapter;
-import com.crud.cinema.backend.domain.EmployeeDto;
-import com.crud.cinema.backend.facade.EmployeeFacade;
+import com.crud.cinema.backend.domain.RoomDto;
+import com.crud.cinema.backend.facade.RoomFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.nimbusds.jose.shaded.gson.GsonBuilder;
 import org.hamcrest.Matchers;
@@ -20,20 +20,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitWebConfig
-@WebMvcTest(EmployeeController.class)
-class EmployeeControllerTest {
-
+@WebMvcTest(RoomController.class)
+class RoomControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
-    private EmployeeFacade employeeFacade;
-
+    private RoomFacade roomFacade;
     @MockBean
     private LocalDateTimeTypeAdapter localDateTimeTypeAdapter;
     private Gson gson;
@@ -46,59 +44,59 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void shouldFetchEmployee() throws Exception {
+    void shouldFetchRoom() throws Exception {
         //Given
-        EmployeeDto employeeDto = new EmployeeDto(1L, "John", "Feeney");
+        RoomDto roomDto = new RoomDto(1L, 78);
 
-        when(employeeFacade.getEmployeeWithId(1L)).thenReturn(employeeDto);
-        String jsonContent = gson.toJson(employeeDto);
+        when(roomFacade.getRoomWithId(1L)).thenReturn(roomDto);
+        String jsonContent = gson.toJson(roomDto);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/employees/1")
+                        .get("/v1/rooms/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.is("John")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is("Feeney")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is(78)));
     }
 
     @Test
-    void shouldFetchAllEmployees() throws Exception {
+    void shouldFetchAllRooms() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
-        EmployeeDto employeeDto2 = new EmployeeDto(2L, "John", "Deak");
-        List<EmployeeDto> employeeDtoList = List.of(employeeDto1, employeeDto2);
+        RoomDto roomDto1 = new RoomDto(1L, 78);
+        RoomDto roomDto2 = new RoomDto(2L, 156);
+        List<RoomDto> roomDtoList = List.of(roomDto1, roomDto2);
 
-        when(employeeFacade.getEmployeesList()).thenReturn(employeeDtoList);
-        String jsonContent = gson.toJson(employeeDtoList);
+        when(roomFacade.getRoomsList()).thenReturn(roomDtoList);
+        String jsonContent = gson.toJson(roomDtoList);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .get("/v1/employees")
+                        .get("/v1/rooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].lastName", Matchers.is("Feeney")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].lastName", Matchers.is("Deak")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].seats", Matchers.is(78)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].seats", Matchers.is(156)));
     }
 
     @Test
-    void shouldCreateEmployee() throws Exception {
+    void shouldCreateRoom() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
+        RoomDto roomDto1 = new RoomDto(1L, 78);
 
-        String jsonContent = gson.toJson(employeeDto1);
+        String jsonContent = gson.toJson(roomDto1);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/v1/employees")
+                        .post("/v1/rooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
@@ -106,37 +104,37 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void shouldUpdateEmployee() throws Exception {
+    void shouldUpdateRoom() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
-        EmployeeDto updatedEmployeeDto1 = new EmployeeDto(1L, "James", "Feeney");
+        RoomDto roomDto1 = new RoomDto(1L, 78);
+        RoomDto updatedRoomDto1 = new RoomDto(1L, 80);
 
-        when(employeeFacade.getEmployeeWithId(1L)).thenReturn(employeeDto1);
-        when(employeeFacade.updateEmployee(any(EmployeeDto.class))).thenReturn(updatedEmployeeDto1);
+        when(roomFacade.getRoomWithId(1L)).thenReturn(roomDto1);
+        when(roomFacade.updateRoom(any(RoomDto.class))).thenReturn(updatedRoomDto1);
 
-        String jsonContent = gson.toJson(updatedEmployeeDto1);
+        String jsonContent = gson.toJson(updatedRoomDto1);
 
         //When & Then
         mockMvc
                 .perform(MockMvcRequestBuilders
-                        .put("/v1/employees")
+                        .put("/v1/rooms")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", Matchers.is("James")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName", Matchers.is("Feeney")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is(80)));
     }
 
     @Test
-    void shouldDeleteEmployee() throws Exception {
+    void shouldDeleteRoom() throws Exception {
         //Given
-        EmployeeDto employeeDto1 = new EmployeeDto(1L, "John", "Feeney");
+        RoomDto roomDto1 = new RoomDto(1L, 78);
 
         //When & Then
-        doNothing().when(employeeFacade).deleteEmployee(employeeDto1.getId());
+        doNothing().when(roomFacade).deleteRoom(roomDto1.getId());
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/v1/employees/{id}", employeeDto1.getId()))
+                        .delete("/v1/rooms/{id}", roomDto1.getId()))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
 }

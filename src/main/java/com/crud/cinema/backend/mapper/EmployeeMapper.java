@@ -22,7 +22,8 @@ public class EmployeeMapper {
         return new EmployeeDto(
                 employee.getId(),
                 employee.getFirstName(),
-                employee.getLastName()
+                employee.getLastName(),
+                employee.getRooms()
         );
     }
 

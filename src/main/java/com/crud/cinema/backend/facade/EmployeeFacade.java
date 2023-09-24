@@ -29,12 +29,12 @@ public class EmployeeFacade {
         return employeeMapper.mapToEmployeeDto(employee);
     }
 
-    public void createEmployee(EmployeeDto employeeDto) {
+    public void createEmployee(final EmployeeDto employeeDto) {
         Employee employee = employeeMapper.mapToEmployee(employeeDto);
         dbService.saveEmployee(employee);
     }
 
-    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+    public EmployeeDto updateEmployee(final EmployeeDto employeeDto) {
         Employee employee = employeeMapper.mapToEmployee(employeeDto);
         Employee savedEmployee = dbService.saveEmployee(employee);
         return employeeMapper.mapToEmployeeDto(savedEmployee);

@@ -27,7 +27,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeFacade.getEmployeeWithId(employeeId));
     }
 
-    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createEmployee(@RequestBody EmployeeDto employeeDto) {
         employeeFacade.createEmployee(employeeDto);
         return ResponseEntity.ok().build();
