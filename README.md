@@ -1,24 +1,24 @@
-It's a cinema management app.
+It's a cinema management app written using Spring, Spring Boot for backend and Vaadin for frontend.
 
 Contains these endpoints:
 
-1. GET Pobierz filmy z repertuaru
-2. GET Pobierz info o konkretnym filmie
-3. POST Dodaj film do repertuaru
-4. PUT Edytuj film w repertuarze
-5. DELETE Usuń film
-6. GET Pobierz listę sal
-7. GET Pobierz info o konkretnej sali
-8. POST Dodaj salę
-9. PUT Edytuj salę
-10. DELETE Usuń salę
-11. GET Pobierz listę pracowników
-12. GET Pobierz info o pracowniku
-13. POST Dodaj pracownika
-14. PUT Edytuj pracownika
-15. DELETE Usuń pracownika
-16. GET Pobierz listę seansów
-17. GET Pobierz info o konkretnym seansie
-18. POST Dodaj seans
-19. PUT Edytuj seans
-20. DELETE Usuń seans
+1. GET Fetch all movies
+2. GET Fetch a single movie
+3. POST Add a movie
+4. PUT Edit a movie
+5. DELETE Delete a movie
+6. GET Fetch all rooms
+7. GET Fetch a single room
+8. POST Add a room
+9. PUT Edit a room
+10. DELETE Delete a room
+11. GET Fetch all employees
+12. GET Fetch a single employee
+13. POST Add an employee
+14. PUT Edit an employee
+15. DELETE Delete an employee
+16. GET Fetch all performances
+17. GET Fetch a single performance
+18. POST Add a performance
+19. PUT Edit a performance
+20. DELETE Delete a performance
