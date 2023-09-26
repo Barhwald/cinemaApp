@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -11,7 +12,7 @@ public class EmployeeDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private List<Room> rooms;
+    private Set<Room> rooms;
 
     public EmployeeDto(long id, String firstName, String lastName) {
         this.id = id;

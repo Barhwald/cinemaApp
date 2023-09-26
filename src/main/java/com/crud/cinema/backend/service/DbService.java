@@ -47,21 +47,21 @@ public class DbService {
     public Movie getMovieWithId(long id) {
         return movieRepository.findById(id).isPresent() ? movieRepository.findById(id).get() : null;
     }
-    public Set<Movie> getMoviesWithId(long id) {
+    public Set<Movie> getMoviesWithId(String id) {
         return getAllMovies().stream()
-                .filter(mov -> mov.getId().toString().contains(String.valueOf(id)))
+                .filter(mov -> mov.getId().toString().contains((id)))
                 .collect(Collectors.toSet());
     }
     public Set<Movie> getMoviesWithTitle(String title) {
         String lowerCaseTitle = title.toLowerCase();
         return getAllMovies().stream()
-                .filter(mov -> mov.getTitle().contains(lowerCaseTitle))
+                .filter(mov -> mov.getTitle().toLowerCase().contains(lowerCaseTitle))
                 .collect(Collectors.toSet());
     }
     public Set<Movie> getMoviesWithDescription(String desc) {
         String lowerCaseDesc = desc.toLowerCase();
         return getAllMovies().stream()
-                .filter(mov -> mov.getDescription().contains(lowerCaseDesc))
+                .filter(mov -> mov.getDescription().toLowerCase().contains(lowerCaseDesc))
                 .collect(Collectors.toSet());
     }
     public Set<Movie> getMoviesWithYear(String year) {
@@ -97,8 +97,30 @@ public class DbService {
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
     }
-    public void deleteRoomById(long id) {
+    public boolean deleteRoomById(long id) {
         roomRepository.deleteById(id);
+        return true;
     }
 
+    public Set<Room> getRoomsWithId(String id) {
+        return getAllRooms().stream()
+                .filter(room -> room.getId().toString().contains(id))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Room> getRoomsWithSeats(String seats) {
+        return getAllRooms().stream()
+                .filter(room -> room.getSeats().contains(seats))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Room> getRoomsWithEmployees(String searchString) {
+        return getAllRooms().stream()
+                .filter(room -> room.getEmployees()
+                        .stream()
+                        .anyMatch(emp ->
+                                emp.getFirstName().toLowerCase().contains(searchString.toLowerCase()) ||
+                                        emp.getLastName().toLowerCase().contains(searchString.toLowerCase())))
+                .collect(Collectors.toSet());
+    }
 }

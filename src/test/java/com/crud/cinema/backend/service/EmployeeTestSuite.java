@@ -3,7 +3,6 @@ package com.crud.cinema.backend.service;
 import com.crud.cinema.backend.domain.Employee;
 import com.crud.cinema.backend.domain.Room;
 import com.crud.cinema.backend.repository.EmployeeRepository;
-import com.crud.cinema.backend.service.DbService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +11,7 @@ import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,16 +54,16 @@ public class EmployeeTestSuite {
     @Test
     void shouldGetAllEmployees() {
         //Given
-        Room room1 = new Room(120);
-        Room room2 = new Room(150);
-        Room room3 = new Room(160);
+        Room room1 = new Room("120");
+        Room room2 = new Room("150");
+        Room room3 = new Room("160");
 
-        List<Room> listOne = List.of(room1, room2);
-        List<Room> listTwo = List.of(room2, room3);
+        Set<Room> setOne = Set.of(room1, room2);
+        Set<Room> setTwo = Set.of(room2, room3);
 
-        Employee emp1 = new Employee("John", "Layne", listOne);
-        Employee emp2 = new Employee("John", "Payne", listTwo);
-        Employee emp3 = new Employee("John", "Wayne", listOne);
+        Employee emp1 = new Employee("John", "Layne", setOne);
+        Employee emp2 = new Employee("John", "Payne", setTwo);
+        Employee emp3 = new Employee("John", "Wayne", setOne);
 
         //When
         dbService.saveEmployee(emp1);

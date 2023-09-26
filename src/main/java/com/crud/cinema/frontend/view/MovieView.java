@@ -1,8 +1,9 @@
-package com.crud.cinema.frontend;
+package com.crud.cinema.frontend.view;
 
 import com.crud.cinema.backend.domain.Movie;
 import com.crud.cinema.backend.service.DbService;
 import com.crud.cinema.backend.service.OmdbService;
+import com.crud.cinema.frontend.form.MovieForm;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -55,14 +56,9 @@ public class MovieView extends VerticalLayout {
         filter4.addValueChangeListener(e -> updateYear());
         movieGrid.setColumns("id", "title", "description", "year");
 
-
         Grid.Column<Movie> deleteColumn = movieGrid.addColumn(
                         new ComponentRenderer<>(this::createDeleteButton))
-                .setHeader("Actions");
-
-        // Set the column width (adjust as needed)
-        deleteColumn.setWidth("100px");
-
+                .setHeader("Delete");
         deleteColumn.setWidth("100px");
 
         goToDashboard.addClickListener(e ->
@@ -78,7 +74,6 @@ public class MovieView extends VerticalLayout {
         heading.getStyle().set("margin", "auto");
 
         HorizontalLayout filters = new HorizontalLayout(filter1, filter2, filter3, filter4, goToDashboard, addNewMovie);
-
         VerticalLayout mainContent = new VerticalLayout(movieGrid, form);
 
         mainContent.setSizeFull();
@@ -98,8 +93,7 @@ public class MovieView extends VerticalLayout {
     }
 
     public void updateId() {
-        long id = Long.parseLong(filter1.getValue());
-        movieGrid.setItems(dbService.getMoviesWithId(id));
+        movieGrid.setItems(dbService.getMoviesWithId(filter1.getValue()));
     }
     public void updateTitle() {
         movieGrid.setItems(dbService.getMoviesWithTitle(filter2.getValue()));

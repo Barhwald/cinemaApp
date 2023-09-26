@@ -5,7 +5,6 @@ import com.crud.cinema.backend.domain.Movie;
 import com.crud.cinema.backend.domain.Performance;
 import com.crud.cinema.backend.domain.Room;
 import com.crud.cinema.backend.repository.PerformanceRepository;
-import com.crud.cinema.backend.service.DbService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +13,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,7 +32,7 @@ public class PerformanceTestSuite {
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
-        Room room = new Room(120, List.of(employee1, employee2));
+        Room room = new Room("120", Set.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 
@@ -50,7 +50,7 @@ public class PerformanceTestSuite {
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
-        Room room = new Room(120, List.of(employee1, employee2));
+        Room room = new Room("120", Set.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 
@@ -71,8 +71,8 @@ public class PerformanceTestSuite {
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
-        Room room1 = new Room(120, List.of(employee1, employee2));
-        Room room2 = new Room(78, List.of(employee2));
+        Room room1 = new Room("120", Set.of(employee1, employee2));
+        Room room2 = new Room("78", Set.of(employee2));
 
         Performance performance1 = new Performance(LocalDateTime.now(), movie, room1);
         Performance performance2 = new Performance(LocalDateTime.now(), movie, room2);
@@ -93,7 +93,7 @@ public class PerformanceTestSuite {
         Employee employee1 = new Employee("Harry", "Bleach");
         Employee employee2 = new Employee("Harry", "Kane");
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
-        Room room = new Room(120, List.of(employee1, employee2));
+        Room room = new Room("120", Set.of(employee1, employee2));
 
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 

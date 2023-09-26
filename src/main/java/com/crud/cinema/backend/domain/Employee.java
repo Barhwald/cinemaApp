@@ -1,16 +1,16 @@
 package com.crud.cinema.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity(name = "EMPLOYEES")
 public class Employee {
 
@@ -25,20 +25,21 @@ public class Employee {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "JOIN_ROOM_EMPLOYEE",
             joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROOM_ID", referencedColumnName = "ROOM_ID")}
+            inverseJoinColumns = {@JoinColumn(name = "ROOM_ID", referencedColumnName = "ROOM_ID")},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"ROOM_ID", "EMPLOYEE_ID"})}
     )
-    private List<Room> rooms = new ArrayList<>();
+    private Set<Room> rooms = new HashSet<>();
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Employee(String firstName, String lastName, List<Room> rooms) {
+    public Employee(String firstName, String lastName, Set<Room> rooms) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rooms = rooms;
@@ -49,4 +50,5 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
 }

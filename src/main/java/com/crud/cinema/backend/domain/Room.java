@@ -1,16 +1,15 @@
 package com.crud.cinema.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+@EqualsAndHashCode(exclude="employees")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity(name = "ROOMS")
 public class Room {
     @Id
@@ -19,30 +18,45 @@ public class Room {
     private Long id;
 
     @Column(name = "SEATS")
-    private Integer seats;
+    private String seats;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "rooms")
-    public List<Employee> employees = new ArrayList<>();
+    @ManyToMany(mappedBy = "rooms",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    public Set<Employee> employees = new HashSet<>();
 
     @OneToMany(
             targetEntity = Performance.class,
             mappedBy = "room",
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private List<Performance> performances = new ArrayList<>();
 
-    public Room(Integer seats) {
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
+        employee.getRooms().add(this);
+    }
+
+    public void removeEmployee(Employee employee) {
+        this.employees.remove(employee);
+        employee.getRooms().add(this);
+    }
+
+    public Room(String seats) {
         this.seats = seats;
     }
 
-    public Room(Long id, Integer seats) {
+    public Room(Long id, String seats) {
         this.id = id;
         this.seats = seats;
     }
 
-    public Room(Integer seats, List<Employee> employees) {
+    public Room(String seats, Set<Employee> employees) {
         this.seats = seats;
         this.employees = employees;
     }
+
 }

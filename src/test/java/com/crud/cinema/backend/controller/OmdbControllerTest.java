@@ -28,7 +28,7 @@ public class OmdbControllerTest {
     @Test
     void shouldFetchOmdbMovie() throws Exception {
         //Given
-        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Some title", "Some plot", "1969", 4.5);
+        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Some title", "Some plot", "1969", "4.5");
 
         when(omdbFacade.getOmdbMovieByTitle("title")).thenReturn(omdbMovieDto);
         Gson gson = new Gson();

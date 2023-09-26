@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 @Transactional
@@ -25,7 +26,7 @@ public class RoomTestSuite {
     @Test
     void shouldSaveRoom() {
         //Given
-        Room room = new Room(120);
+        Room room = new Room("120");
 
         //When
         dbService.saveRoom(room);
@@ -38,7 +39,7 @@ public class RoomTestSuite {
     @Test
     void shouldGetRoom() {
         //Given
-        Room room = new Room(120);
+        Room room = new Room("120");
 
         //When
         dbService.saveRoom(room);
@@ -56,13 +57,13 @@ public class RoomTestSuite {
         Employee employee2 = new Employee("Mary", "Gold");
         Employee employee3 = new Employee("Jack", "Black");
 
-        List<Employee> listOne = List.of(employee1, employee2);
-        List<Employee> listTwo = List.of(employee2, employee3);
-        List<Employee> listThree = List.of(employee1, employee3);
+        Set<Employee> setOne = Set.of(employee1, employee2);
+        Set<Employee> setTwo = Set.of(employee2, employee3);
+        Set<Employee> setThree = Set.of(employee1, employee3);
 
-        Room room1 = new Room(120, listOne);
-        Room room2 = new Room(120, listTwo);
-        Room room3 = new Room(150, listThree);
+        Room room1 = new Room("120", setOne);
+        Room room2 = new Room("120", setTwo);
+        Room room3 = new Room("150", setThree);
 
         //When
         dbService.saveRoom(room1);
@@ -80,9 +81,9 @@ public class RoomTestSuite {
         Employee employee1 = new Employee("John", "Wayne");
         Employee employee2 = new Employee("Mary", "Gold");
 
-        List<Employee> listOne = List.of(employee1, employee2);
+        Set<Employee> setOne = Set.of(employee1, employee2);
 
-        Room room = new Room(80, listOne);
+        Room room = new Room("80", setOne);
 
         //When
         dbService.saveRoom(room);

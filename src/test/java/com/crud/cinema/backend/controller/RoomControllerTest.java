@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -46,7 +45,7 @@ class RoomControllerTest {
     @Test
     void shouldFetchRoom() throws Exception {
         //Given
-        RoomDto roomDto = new RoomDto(1L, 78);
+        RoomDto roomDto = new RoomDto(1L, "78");
 
         when(roomFacade.getRoomWithId(1L)).thenReturn(roomDto);
         String jsonContent = gson.toJson(roomDto);
@@ -66,8 +65,8 @@ class RoomControllerTest {
     @Test
     void shouldFetchAllRooms() throws Exception {
         //Given
-        RoomDto roomDto1 = new RoomDto(1L, 78);
-        RoomDto roomDto2 = new RoomDto(2L, 156);
+        RoomDto roomDto1 = new RoomDto(1L, "78");
+        RoomDto roomDto2 = new RoomDto(2L, "156");
         List<RoomDto> roomDtoList = List.of(roomDto1, roomDto2);
 
         when(roomFacade.getRoomsList()).thenReturn(roomDtoList);
@@ -89,7 +88,7 @@ class RoomControllerTest {
     @Test
     void shouldCreateRoom() throws Exception {
         //Given
-        RoomDto roomDto1 = new RoomDto(1L, 78);
+        RoomDto roomDto1 = new RoomDto(1L, "78");
 
         String jsonContent = gson.toJson(roomDto1);
 
@@ -106,8 +105,8 @@ class RoomControllerTest {
     @Test
     void shouldUpdateRoom() throws Exception {
         //Given
-        RoomDto roomDto1 = new RoomDto(1L, 78);
-        RoomDto updatedRoomDto1 = new RoomDto(1L, 80);
+        RoomDto roomDto1 = new RoomDto(1L, "78");
+        RoomDto updatedRoomDto1 = new RoomDto(1L, "80");
 
         when(roomFacade.getRoomWithId(1L)).thenReturn(roomDto1);
         when(roomFacade.updateRoom(any(RoomDto.class))).thenReturn(updatedRoomDto1);
@@ -128,7 +127,7 @@ class RoomControllerTest {
     @Test
     void shouldDeleteRoom() throws Exception {
         //Given
-        RoomDto roomDto1 = new RoomDto(1L, 78);
+        RoomDto roomDto1 = new RoomDto(1L, "78");
 
         //When & Then
         doNothing().when(roomFacade).deleteRoom(roomDto1.getId());

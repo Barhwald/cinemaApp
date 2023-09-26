@@ -5,17 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoomDto {
     private Long id;
-    private Integer seats;
-    private List<Employee> employees;
+    private String seats;
+    private Set<Employee> employees;
     private List<Performance> performances;
 
-    public RoomDto(Long id, Integer seats) {
+    public RoomDto(Long id, String seats) {
         this.id = id;
         this.seats = seats;
     }
