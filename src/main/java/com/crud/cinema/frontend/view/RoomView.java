@@ -144,7 +144,7 @@ public class RoomView extends VerticalLayout {
             formattedEmployees.append(employee.getFirstName())
                     .append(" ")
                     .append(employee.getLastName())
-                    .append(", "); // Add a separator
+                    .append(", ");
         }
         formattedEmployees.setLength(formattedEmployees.length() - 2);
         return formattedEmployees.toString();

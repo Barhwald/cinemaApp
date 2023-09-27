@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,5 +51,7 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
+
 
 }
