@@ -3,7 +3,6 @@ package com.crud.cinema.backend.service;
 import com.crud.cinema.backend.domain.Employee;
 import com.crud.cinema.backend.domain.Room;
 import com.crud.cinema.backend.repository.RoomRepository;
-import com.crud.cinema.backend.service.DbService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RoomTestSuite {
 
     @Autowired
-    private DbService dbService;
+    private RoomDbService roomDbService;
     @Autowired
     private RoomRepository roomRepository;
 
@@ -29,7 +28,7 @@ public class RoomTestSuite {
         Room room = new Room("120");
 
         //When
-        dbService.saveRoom(room);
+        roomDbService.saveRoom(room);
         Long roomId = room.getId();
 
         //Then
@@ -42,8 +41,8 @@ public class RoomTestSuite {
         Room room = new Room("120");
 
         //When
-        dbService.saveRoom(room);
-        Room savedRoom = dbService.getRoomWithId(room.getId());
+        roomDbService.saveRoom(room);
+        Room savedRoom = roomDbService.getRoomWithId(room.getId());
 
         //Then
         assertEquals(savedRoom.getId(), room.getId());
@@ -66,10 +65,10 @@ public class RoomTestSuite {
         Room room3 = new Room("150", setThree);
 
         //When
-        dbService.saveRoom(room1);
-        dbService.saveRoom(room2);
-        dbService.saveRoom(room3);
-        List<Room> roomsList = dbService.getAllRooms();
+        roomDbService.saveRoom(room1);
+        roomDbService.saveRoom(room2);
+        roomDbService.saveRoom(room3);
+        List<Room> roomsList = roomDbService.getAllRooms();
 
         //Then
         assertEquals(3, roomsList.size());
@@ -86,9 +85,9 @@ public class RoomTestSuite {
         Room room = new Room("80", setOne);
 
         //When
-        dbService.saveRoom(room);
+        roomDbService.saveRoom(room);
         Long roomId = room.getId();
-        dbService.deleteRoomById(roomId);
+        roomDbService.deleteRoomById(roomId);
         Optional<Room> optionalRoom = roomRepository.findById(roomId);
 
         //Then

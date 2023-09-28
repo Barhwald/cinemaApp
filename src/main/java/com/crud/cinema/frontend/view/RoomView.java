@@ -3,7 +3,8 @@ package com.crud.cinema.frontend.view;
 import com.crud.cinema.backend.domain.Employee;
 import com.crud.cinema.backend.domain.Performance;
 import com.crud.cinema.backend.domain.Room;
-import com.crud.cinema.backend.service.DbService;
+import com.crud.cinema.backend.service.EmployeeDbService;
+import com.crud.cinema.backend.service.RoomDbService;
 import com.crud.cinema.frontend.form.RoomForm;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -28,7 +29,8 @@ import java.util.stream.Collectors;
 @Route("/rooms")
 public class RoomView extends VerticalLayout {
 
-    private final DbService dbService;
+    private final EmployeeDbService employeeDbService;
+    private final RoomDbService roomDbService;
     private final Grid<Room> roomGrid = new Grid<>(Room.class);
     private final Button goToDashboard = new Button("Dashboard");
     private final TextField filter1 = new TextField();
@@ -37,9 +39,10 @@ public class RoomView extends VerticalLayout {
     private final Button addNewRoom = new Button("Add new room");
 
     @Autowired
-    public RoomView(DbService dbService) {
-        this.dbService = dbService;
-        RoomForm form = new RoomForm(this, dbService);
+    public RoomView(EmployeeDbService employeeDbService, RoomDbService roomDbService) {
+        this.employeeDbService = employeeDbService;
+        this.roomDbService = roomDbService;
+        RoomForm form = new RoomForm(this, employeeDbService, roomDbService);
 
         filter1.setPlaceholder("Filter by id");
         filter1.setClearButtonVisible(true);
@@ -96,25 +99,24 @@ public class RoomView extends VerticalLayout {
         refresh();
 
         roomGrid.asSingleSelect().addValueChangeListener(event -> {
-            Room selectedRoom = event.getValue();
-            form.setRoom(selectedRoom);
+            form.setRoom(roomGrid.asSingleSelect().getValue());
         });
     }
 
     public void refresh() {
-        roomGrid.setItems(dbService.getAllRooms());
+        roomGrid.setItems(roomDbService.getAllRooms());
     }
 
     public void updateId() {
-        roomGrid.setItems(dbService.getRoomsWithId(filter1.getValue()));
+        roomGrid.setItems(roomDbService.getRoomsWithId(filter1.getValue()));
     }
 
     public void updateSeats() {
-        roomGrid.setItems(dbService.getRoomsWithSeats(filter2.getValue()));
+        roomGrid.setItems(roomDbService.getRoomsWithSeats(filter2.getValue()));
     }
 
     public void updateEmployees() {
-        roomGrid.setItems(dbService.getRoomsWithEmployees(filter3.getValue()));
+        roomGrid.setItems(roomDbService.getRoomsWithEmployees(filter3.getValue()));
     }
 
     private Component createDeleteButton(Room room) {
@@ -124,7 +126,7 @@ public class RoomView extends VerticalLayout {
     }
 
     private void deleteRoom(Room room) {
-        boolean deleted = dbService.deleteRoomById(room.getId());
+        boolean deleted = roomDbService.deleteRoomById(room.getId());
 
         if (deleted) {
             refresh();

@@ -5,12 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-@EqualsAndHashCode(exclude="employees")
+@EqualsAndHashCode(exclude = "employees")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "ROOMS")
+@ToString
 public class Room {
     @Id
     @GeneratedValue
@@ -20,11 +21,16 @@ public class Room {
     @Column(name = "SEATS")
     private String seats;
 
-    @ManyToMany(mappedBy = "rooms",
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
+                    CascadeType.PERSIST, CascadeType.MERGE
             })
+    @JoinTable(
+            name = "JOIN_ROOM_EMPLOYEE",
+            inverseJoinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")},
+            joinColumns = {@JoinColumn(name = "ROOM_ID", referencedColumnName = "ROOM_ID")},
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"ROOM_ID", "EMPLOYEE_ID"})}
+    )
     public Set<Employee> employees = new HashSet<>();
 
     @OneToMany(

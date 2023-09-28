@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EmployeeTestSuite {
 
     @Autowired
-    private DbService dbService;
+    private EmployeeDbService employeeDbService;
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -30,7 +30,7 @@ public class EmployeeTestSuite {
         Employee emp = new Employee("John", "Wick");
 
         //When
-        dbService.saveEmployee(emp);
+        employeeDbService.saveEmployee(emp);
         Long empId = emp.getId();
 
         //Then
@@ -43,8 +43,8 @@ public class EmployeeTestSuite {
         Employee emp = new Employee("John", "Wayne");
 
         //When
-        dbService.saveEmployee(emp);
-        Employee savedEmployee = dbService.getEmployeeWithId(emp.getId());
+        employeeDbService.saveEmployee(emp);
+        Employee savedEmployee = employeeDbService.getEmployeeWithId(emp.getId());
 
         //Then
         assertEquals(savedEmployee.getFirstName(), emp.getFirstName());
@@ -66,10 +66,10 @@ public class EmployeeTestSuite {
         Employee emp3 = new Employee("John", "Wayne", setOne);
 
         //When
-        dbService.saveEmployee(emp1);
-        dbService.saveEmployee(emp2);
-        dbService.saveEmployee(emp3);
-        List<Employee> employeesList = dbService.getAllEmployees();
+        employeeDbService.saveEmployee(emp1);
+        employeeDbService.saveEmployee(emp2);
+        employeeDbService.saveEmployee(emp3);
+        List<Employee> employeesList = employeeDbService.getAllEmployees();
 
         //Then
         assertEquals(3, employeesList.size());
@@ -81,9 +81,9 @@ public class EmployeeTestSuite {
         Employee emp = new Employee("John", "Wick");
 
         //When
-        dbService.saveEmployee(emp);
+        employeeDbService.saveEmployee(emp);
         Long empId = emp.getId();
-        dbService.deleteEmployeeById(empId);
+        employeeDbService.deleteEmployeeById(empId);
         Optional<Employee> optionalEmployee = employeeRepository.findById(empId);
 
         //Then

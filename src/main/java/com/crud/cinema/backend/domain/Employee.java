@@ -6,17 +6,17 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "EMPLOYEES")
+@ToString(exclude = {"rooms"})
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EMPLOYEE_ID", unique = true)
     private Long id;
 
@@ -26,13 +26,7 @@ public class Employee {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToMany
-    @JoinTable(
-            name = "JOIN_ROOM_EMPLOYEE",
-            joinColumns = {@JoinColumn(name = "EMPLOYEE_ID", referencedColumnName = "EMPLOYEE_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROOM_ID", referencedColumnName = "ROOM_ID")},
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"ROOM_ID", "EMPLOYEE_ID"})}
-    )
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "employees")
     private Set<Room> rooms = new HashSet<>();
 
     public Employee(String firstName, String lastName) {
@@ -51,7 +45,5 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-
-
 
 }

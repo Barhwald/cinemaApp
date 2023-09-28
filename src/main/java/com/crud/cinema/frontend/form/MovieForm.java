@@ -4,7 +4,7 @@ import com.crud.cinema.backend.domain.Movie;
 import com.crud.cinema.backend.domain.MovieDto;
 import com.crud.cinema.backend.domain.OmdbMovieDto;
 import com.crud.cinema.backend.mapper.OmdbMapper;
-import com.crud.cinema.backend.service.DbService;
+import com.crud.cinema.backend.service.MovieDbService;
 import com.crud.cinema.backend.service.OmdbService;
 import com.crud.cinema.frontend.view.MovieView;
 import com.vaadin.flow.component.button.Button;
@@ -27,13 +27,13 @@ public class MovieForm extends FormLayout {
     private final TextField searchTitle = new TextField("Title");
     private final Button search = new Button("Search");
     private final Binder<Movie> movieBinder = new Binder<>(Movie.class);
-    private DbService dbService;
+    private MovieDbService movieDbService;
     private OmdbService omdbService;
     private final OmdbMapper omdbMapper = new OmdbMapper();
 
-    public MovieForm(MovieView movieView, DbService dbService, OmdbService omdbService) {
+    public MovieForm(MovieView movieView, MovieDbService movieDbService, OmdbService omdbService) {
         this.movieView = movieView;
-        this.dbService = dbService;
+        this.movieDbService = movieDbService;
         this.omdbService = omdbService;
         HorizontalLayout textFields = new HorizontalLayout(title, description, year, save);
         HorizontalLayout searchSection = new HorizontalLayout(searchTitle, search);
@@ -51,7 +51,7 @@ public class MovieForm extends FormLayout {
 
     private void save() {
         Movie movie = movieBinder.getBean();
-        dbService.saveMovie(movie);
+        movieDbService.saveMovie(movie);
         movieView.refresh();
         setMovie(null);
     }

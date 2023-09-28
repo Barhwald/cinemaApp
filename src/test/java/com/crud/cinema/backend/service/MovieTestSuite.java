@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MovieTestSuite {
 
     @Autowired
-    private DbService dbService;
+    private MovieDbService movieDbService;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -28,7 +28,7 @@ public class MovieTestSuite {
         Movie movie = new Movie("The Hobbit", "A small creature helps some dwarves get their home back", "2016");
 
         //When
-        dbService.saveMovie(movie);
+        movieDbService.saveMovie(movie);
         Long movieId = movie.getId();
 
         //Then
@@ -41,8 +41,8 @@ public class MovieTestSuite {
         Movie movie = new Movie("The Hobbit", "A small creature helps some dwarves get their home back", "2016");
 
         //When
-        dbService.saveMovie(movie);
-        Movie savedMovie = dbService.getMovieWithId(movie.getId());
+        movieDbService.saveMovie(movie);
+        Movie savedMovie = movieDbService.getMovieWithId(movie.getId());
 
         //Then
         assertEquals(savedMovie.getId(), movie.getId());
@@ -59,11 +59,11 @@ public class MovieTestSuite {
         Movie movie4 = new Movie("The Hobbit", "A small creature helps some dwarves get their home back", "2018");
 
         //When
-        dbService.saveMovie(movie1);
-        dbService.saveMovie(movie2);
-        dbService.saveMovie(movie3);
-        dbService.saveMovie(movie4);
-        List<Movie> movieList = dbService.getAllMovies();
+        movieDbService.saveMovie(movie1);
+        movieDbService.saveMovie(movie2);
+        movieDbService.saveMovie(movie3);
+        movieDbService.saveMovie(movie4);
+        List<Movie> movieList = movieDbService.getAllMovies();
 
         //Then
         assertEquals(4, movieList.size());
@@ -75,9 +75,9 @@ public class MovieTestSuite {
         Movie movie1 = new Movie("The Cause", "s get their home back", "2012");
 
         //When
-        dbService.saveMovie(movie1);
+        movieDbService.saveMovie(movie1);
         Long movieId = movie1.getId();
-        dbService.deleteMovieById(movieId);
+        movieDbService.deleteMovieById(movieId);
         Optional<Movie> optionalMovie = movieRepository.findById(movieId);
 
         //Then

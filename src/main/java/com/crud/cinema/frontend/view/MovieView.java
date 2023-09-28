@@ -1,7 +1,7 @@
 package com.crud.cinema.frontend.view;
 
 import com.crud.cinema.backend.domain.Movie;
-import com.crud.cinema.backend.service.DbService;
+import com.crud.cinema.backend.service.MovieDbService;
 import com.crud.cinema.backend.service.OmdbService;
 import com.crud.cinema.frontend.form.MovieForm;
 import com.vaadin.flow.component.Component;
@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route("/movies")
 public class MovieView extends VerticalLayout {
 
-    private final DbService dbService;
+    private final MovieDbService movieDbService;
     private final OmdbService omdbService;
     private final Grid<Movie> movieGrid = new Grid<>(Movie.class);
     private final Button goToDashboard = new Button("Dashboard");
@@ -33,10 +33,10 @@ public class MovieView extends VerticalLayout {
     private final Button addNewMovie = new Button("Add new movie");
 
     @Autowired
-    public MovieView(DbService dbService, OmdbService omdbService) {
-        this.dbService = dbService;
+    public MovieView(MovieDbService movieDbService, OmdbService omdbService) {
+        this.movieDbService = movieDbService;
         this.omdbService = omdbService;
-        MovieForm form = new MovieForm(this, dbService, omdbService);
+        MovieForm form = new MovieForm(this, movieDbService, omdbService);
 
         filter1.setPlaceholder("Filter by id");
         filter1.setClearButtonVisible(true);
@@ -89,20 +89,20 @@ public class MovieView extends VerticalLayout {
     }
 
     public void refresh() {
-        movieGrid.setItems(dbService.getAllMovies());
+        movieGrid.setItems(movieDbService.getAllMovies());
     }
 
     public void updateId() {
-        movieGrid.setItems(dbService.getMoviesWithId(filter1.getValue()));
+        movieGrid.setItems(movieDbService.getMoviesWithId(filter1.getValue()));
     }
     public void updateTitle() {
-        movieGrid.setItems(dbService.getMoviesWithTitle(filter2.getValue()));
+        movieGrid.setItems(movieDbService.getMoviesWithTitle(filter2.getValue()));
     }
     public void updateDescription() {
-        movieGrid.setItems(dbService.getMoviesWithDescription(filter3.getValue()));
+        movieGrid.setItems(movieDbService.getMoviesWithDescription(filter3.getValue()));
     }
     public void updateYear() {
-        movieGrid.setItems(dbService.getMoviesWithYear(filter4.getValue()));
+        movieGrid.setItems(movieDbService.getMoviesWithYear(filter4.getValue()));
     }
     private Component createDeleteButton(Movie movie) {
         Button deleteButton = new Button(new Icon(VaadinIcon.TRASH));
@@ -110,7 +110,7 @@ public class MovieView extends VerticalLayout {
         return deleteButton;
     }
     private void deleteMovie(Movie movie) {
-        boolean deleted = dbService.deleteMovieById(movie.getId());
+        boolean deleted = movieDbService.deleteMovieById(movie.getId());
 
         if (deleted) {
             refresh();

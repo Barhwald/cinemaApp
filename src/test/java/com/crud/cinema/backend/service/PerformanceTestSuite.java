@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PerformanceTestSuite {
 
     @Autowired
-    private DbService dbService;
+    private PerformanceDbService performanceDbService;
     @Autowired
     private PerformanceRepository performanceRepository;
 
@@ -37,7 +37,7 @@ public class PerformanceTestSuite {
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 
         //When
-        dbService.savePerformance(performance);
+        performanceDbService.savePerformance(performance);
         Long perfId = performance.getId();
 
         //Then
@@ -55,8 +55,8 @@ public class PerformanceTestSuite {
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 
         //When
-        dbService.savePerformance(performance);
-        Performance savedPerformance = dbService.getPerformanceWithId(performance.getId());
+        performanceDbService.savePerformance(performance);
+        Performance savedPerformance = performanceDbService.getPerformanceWithId(performance.getId());
 
         //Then
         assertEquals(savedPerformance.getId(), performance.getId());
@@ -78,9 +78,9 @@ public class PerformanceTestSuite {
         Performance performance2 = new Performance(LocalDateTime.now(), movie, room2);
 
         //When
-        dbService.savePerformance(performance1);
-        dbService.savePerformance(performance2);
-        List<Performance> perfList = dbService.getAllPerformances();
+        performanceDbService.savePerformance(performance1);
+        performanceDbService.savePerformance(performance2);
+        List<Performance> perfList = performanceDbService.getAllPerformances();
 
         //Then
         assertEquals(2, perfList.size());
@@ -98,9 +98,9 @@ public class PerformanceTestSuite {
         Performance performance = new Performance(LocalDateTime.now(), movie, room);
 
         //When
-        dbService.savePerformance(performance);
+        performanceDbService.savePerformance(performance);
         Long perfId = performance.getId();
-        dbService.deletePerformanceById(perfId);
+        performanceDbService.deletePerformanceById(perfId);
         Optional<Performance> optionalPerformance = performanceRepository.findById(perfId);
 
         //Then

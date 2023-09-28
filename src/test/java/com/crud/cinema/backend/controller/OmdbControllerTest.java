@@ -45,7 +45,7 @@ public class OmdbControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Title", Matchers.is("Some title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Plot", Matchers.is("Some plot")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Year", Matchers.is("1969")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.imdbRating", Matchers.is(4.5)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.imdbRating", Matchers.is("4.5")));
     }
 
 }
