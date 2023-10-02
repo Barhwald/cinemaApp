@@ -1,10 +1,12 @@
 package com.crud.cinema.frontend.view;
 
+import com.crud.cinema.backend.freecurrency.client.facade.FreecurrencyFacade;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 @Route
@@ -14,8 +16,11 @@ public class MainView extends VerticalLayout {
     private final Button goToRooms = new Button("Rooms");
     private final Button goToPerformances = new Button("Performances");
     private final Button goToEmployees = new Button("Employees");
+    private final TextField readonlyCurrencyField = new TextField();
+    private final FreecurrencyFacade freecurrencyFacade;
 
-    public MainView() {
+    public MainView(FreecurrencyFacade freecurrencyFacade) {
+        this.freecurrencyFacade = freecurrencyFacade;
 
         goToMovies.addClickListener(e -> goToMovies.getUI().ifPresent(ui ->
                 ui.navigate("movies")));
@@ -42,12 +47,19 @@ public class MainView extends VerticalLayout {
         toolbar.getStyle().set("margin-left", "auto");
         toolbar.getStyle().set("margin-right", "auto");
 
-        H3 weatherInfo = new H3("Weather for today: ");
-        weatherInfo.getStyle().set("margin-left", "auto");
-        weatherInfo.getStyle().set("margin-right", "auto");
-        VerticalLayout weatherWidget = new VerticalLayout(weatherInfo); //Weather
+        H3 currencyInfo = new H3("Current EUR to PLN rate: ");
 
-        add(header, toolbar, weatherWidget);
+        readonlyCurrencyField.setReadOnly(true);
+        readonlyCurrencyField.getStyle().set("margin-top", "auto");
+        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln().substring(0,4));
+
+        HorizontalLayout currencyWidget = new HorizontalLayout(currencyInfo, readonlyCurrencyField);
+        currencyWidget.getStyle().set("margin-left", "auto");
+        currencyWidget.getStyle().set("margin-right", "auto");
+        currencyWidget.getStyle().set("position", "absolute");
+        currencyWidget.getStyle().set("bottom", "0");
+
+        add(header, toolbar, currencyWidget);
         setSizeFull();
     }
 

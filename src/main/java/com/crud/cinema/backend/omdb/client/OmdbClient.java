@@ -14,8 +14,8 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class OmdbClient {
-    private final RestTemplate restTemplate;
 
+    private final RestTemplate restTemplate;
     @Value("${omdb.api.endpoint.prod}")
     private String omdbApiEndpoint;
     @Value("${omdb.app.key}")
