@@ -1,6 +1,7 @@
 package com.crud.cinema.frontend.view;
 
 import com.crud.cinema.backend.domain.Movie;
+import com.crud.cinema.backend.domain.Performance;
 import com.crud.cinema.backend.service.MovieDbService;
 import com.crud.cinema.backend.service.OmdbService;
 import com.crud.cinema.frontend.form.MovieForm;
@@ -18,6 +19,9 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Route("/movies")
 public class MovieView extends VerticalLayout {
@@ -110,6 +114,12 @@ public class MovieView extends VerticalLayout {
         return deleteButton;
     }
     private void deleteMovie(Movie movie) {
+        movie.removePerformanceAssociations();
+        List<Performance> iterationList = new ArrayList<>(movie.getPerformances());
+
+        for (Performance performance : iterationList) {
+            movie.removePerformance(performance);
+        }
         boolean deleted = movieDbService.deleteMovieById(movie.getId());
 
         if (deleted) {

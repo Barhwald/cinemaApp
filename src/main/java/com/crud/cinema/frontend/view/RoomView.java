@@ -22,6 +22,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class RoomView extends VerticalLayout {
     private final TextField filter1 = new TextField();
     private final TextField filter2 = new TextField();
     private final TextField filter3 = new TextField();
+    private final TextField filter4 = new TextField();
     private final Button addNewRoom = new Button("Add new room");
 
     @Autowired
@@ -48,22 +50,26 @@ public class RoomView extends VerticalLayout {
         filter1.setClearButtonVisible(true);
         filter1.setValueChangeMode(ValueChangeMode.EAGER);
         filter1.addValueChangeListener(e -> updateId());
-        filter2.setPlaceholder("Filter by seats");
+        filter2.setPlaceholder("Filter by name");
         filter2.setClearButtonVisible(true);
         filter2.setValueChangeMode(ValueChangeMode.EAGER);
-        filter2.addValueChangeListener(e -> updateSeats());
-        filter3.setPlaceholder("Filter by employees");
+        filter2.addValueChangeListener(e -> updateName());
+        filter3.setPlaceholder("Filter by seats");
         filter3.setClearButtonVisible(true);
         filter3.setValueChangeMode(ValueChangeMode.EAGER);
-        filter3.addValueChangeListener(e -> updateEmployees());
+        filter3.addValueChangeListener(e -> updateSeats());
+        filter4.setPlaceholder("Filter by employees");
+        filter4.setClearButtonVisible(true);
+        filter4.setValueChangeMode(ValueChangeMode.EAGER);
+        filter4.addValueChangeListener(e -> updateEmployees());
 
-        roomGrid.setColumns("id", "seats");
+        roomGrid.setColumns("id", "name", "seats");
 
         roomGrid.addColumn(room -> formatEmployees(room.getEmployees()))
                 .setHeader("Employees");
 
         roomGrid.addColumn(new ComponentRenderer<>(room -> {
-            List<Performance> performances = room.getPerformances();
+            Set<Performance> performances = room.getPerformances();
             String formattedPerformances = performances.stream()
                     .map(perf -> perf.getId().toString())
                     .collect(Collectors.joining(", "));
@@ -87,7 +93,7 @@ public class RoomView extends VerticalLayout {
         H1 heading = new H1("Rooms");
         heading.getStyle().set("margin", "auto");
 
-        HorizontalLayout filters = new HorizontalLayout(filter1, filter2, filter3, goToDashboard, addNewRoom);
+        HorizontalLayout filters = new HorizontalLayout(filter1, filter2, filter3, filter4, goToDashboard, addNewRoom);
         VerticalLayout mainContent = new VerticalLayout(roomGrid, form);
 
         mainContent.setSizeFull();
@@ -110,13 +116,16 @@ public class RoomView extends VerticalLayout {
     public void updateId() {
         roomGrid.setItems(roomDbService.getRoomsWithId(filter1.getValue()));
     }
+    public void updateName() {
+        roomGrid.setItems(roomDbService.getRoomsWithName(filter2.getValue()));
+    }
 
     public void updateSeats() {
-        roomGrid.setItems(roomDbService.getRoomsWithSeats(filter2.getValue()));
+        roomGrid.setItems(roomDbService.getRoomsWithSeats(filter3.getValue()));
     }
 
     public void updateEmployees() {
-        roomGrid.setItems(roomDbService.getRoomsWithEmployees(filter3.getValue()));
+        roomGrid.setItems(roomDbService.getRoomsWithEmployees(filter4.getValue()));
     }
 
     private Component createDeleteButton(Room room) {
@@ -126,12 +135,23 @@ public class RoomView extends VerticalLayout {
     }
 
     private void deleteRoom(Room room) {
+        room.removePerformanceAssociations();
+        List<Employee> iterationList = new ArrayList<>(room.getEmployees());
+        for (Employee employee : iterationList) {
+            room.removeEmployee(employee);
+        }
+
+        List<Performance> iterationList1 = new ArrayList<>(room.getPerformances());
+        for (Performance performance : iterationList1) {
+            room.removePerformance(performance);
+        }
+
         boolean deleted = roomDbService.deleteRoomById(room.getId());
 
         if (deleted) {
             refresh();
         } else {
-            Notification.show("Failed to delete the room.");
+            Notification.show("Failed to delete room.");
         }
         refresh();
     }

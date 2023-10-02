@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @AllArgsConstructor
@@ -14,7 +14,7 @@ public class MovieDto {
     private String title;
     private String description;
     private String year;
-    private List<Performance> performances;
+    private Set<Performance> performances;
 
     public MovieDto(Long id, String title, String description, String year) {
         this.id = id;

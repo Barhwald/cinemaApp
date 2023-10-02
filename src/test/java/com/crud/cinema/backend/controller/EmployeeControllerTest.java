@@ -1,6 +1,5 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.adapter.LocalDateTimeTypeAdapter;
 import com.crud.cinema.backend.domain.EmployeeDto;
 import com.crud.cinema.backend.facade.EmployeeFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -34,14 +33,11 @@ class EmployeeControllerTest {
     @MockBean
     private EmployeeFacade employeeFacade;
 
-    @MockBean
-    private LocalDateTimeTypeAdapter localDateTimeTypeAdapter;
     private Gson gson;
 
     @BeforeEach
     void setUp() {
         gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, localDateTimeTypeAdapter)
                 .create();
     }
 

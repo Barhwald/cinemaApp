@@ -13,6 +13,7 @@ public class RoomMapper {
     public Room mapToRoom(final RoomDto roomDto) {
         return new Room(
                 roomDto.getId(),
+                roomDto.getName(),
                 roomDto.getSeats()
         );
     }
@@ -20,6 +21,7 @@ public class RoomMapper {
     public RoomDto mapToRoomDto(final Room room) {
         return new RoomDto(
                 room.getId(),
+                room.getName(),
                 room.getSeats(),
                 room.getEmployees(),
                 room.getPerformances()

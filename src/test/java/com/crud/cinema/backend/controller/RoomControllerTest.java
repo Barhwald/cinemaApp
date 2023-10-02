@@ -1,6 +1,5 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.adapter.LocalDateTimeTypeAdapter;
 import com.crud.cinema.backend.domain.RoomDto;
 import com.crud.cinema.backend.facade.RoomFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -31,14 +30,11 @@ class RoomControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private RoomFacade roomFacade;
-    @MockBean
-    private LocalDateTimeTypeAdapter localDateTimeTypeAdapter;
     private Gson gson;
 
     @BeforeEach
     void setUp() {
         gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, localDateTimeTypeAdapter)
                 .create();
     }
 
@@ -59,7 +55,7 @@ class RoomControllerTest {
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is(78)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is("78")));
     }
 
     @Test
@@ -81,8 +77,8 @@ class RoomControllerTest {
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].seats", Matchers.is(78)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].seats", Matchers.is(156)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].seats", Matchers.is("78")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].seats", Matchers.is("156")));
     }
 
     @Test
@@ -121,7 +117,7 @@ class RoomControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is(80)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.seats", Matchers.is("80")));
     }
 
     @Test

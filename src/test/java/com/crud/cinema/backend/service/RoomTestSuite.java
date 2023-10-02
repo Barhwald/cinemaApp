@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RoomTestSuite {
 
     @Autowired
+    private EmployeeDbService employeeDbService;
+    @Autowired
     private RoomDbService roomDbService;
     @Autowired
     private RoomRepository roomRepository;
@@ -65,6 +67,10 @@ public class RoomTestSuite {
         Room room3 = new Room("150", setThree);
 
         //When
+        employeeDbService.saveEmployee(employee1);
+        employeeDbService.saveEmployee(employee2);
+        employeeDbService.saveEmployee(employee3);
+
         roomDbService.saveRoom(room1);
         roomDbService.saveRoom(room2);
         roomDbService.saveRoom(room3);

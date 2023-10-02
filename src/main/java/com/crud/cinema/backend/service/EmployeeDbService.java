@@ -33,8 +33,20 @@ public class EmployeeDbService {
         return employeeRepository.findAll();
     }
 
-    public void deleteEmployeeById(long id) {
+    public boolean deleteEmployeeById(long id) {
         employeeRepository.deleteById(id);
+        return true;
     }
 
+    public Set<Employee> getEmployeesWithFirstName(String value) {
+        return getAllEmployees().stream()
+                .filter(emp -> emp.getFirstName().toLowerCase().contains(value.toLowerCase()))
+                .collect(Collectors.toSet());
+    }
+
+    public Set<Employee> getEmployeesWithLastName(String value) {
+        return getAllEmployees().stream()
+                .filter(emp -> emp.getLastName().toLowerCase().contains(value.toLowerCase()))
+                .collect(Collectors.toSet());
+    }
 }

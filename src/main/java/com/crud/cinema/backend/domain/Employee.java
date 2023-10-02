@@ -26,8 +26,15 @@ public class Employee {
     @Column(name = "LAST_NAME")
     private String lastName;
 
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "employees")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "employees")
     private Set<Room> rooms = new HashSet<>();
+
+    @PreRemove
+    public void removeRoomAssociations() {
+        for (Room room: this.rooms) {
+            room.getEmployees().remove(this);
+        }
+    }
 
     public Employee(String firstName, String lastName) {
         this.firstName = firstName;

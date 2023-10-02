@@ -23,8 +23,9 @@ public class PerformanceDbService {
     public List<Performance> getAllPerformances() {
         return performanceRepository.findAll();
     }
-    public void deletePerformanceById(long id) {
+    public boolean deletePerformanceById(long id) {
         performanceRepository.deleteById(id);
+        return true;
     }
 
 }

@@ -5,25 +5,29 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-@EqualsAndHashCode(exclude = "employees")
+@EqualsAndHashCode(exclude = {"employees", "performances"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity(name = "ROOMS")
-@ToString
+@ToString(exclude = {"performances"})
 public class Room {
+
     @Id
     @GeneratedValue
     @Column(name = "ROOM_ID", unique = true)
     private Long id;
+
+    @Column(name = "NAME")
+    private String name;
 
     @Column(name = "SEATS")
     private String seats;
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.PERSIST, CascadeType.MERGE
+                    CascadeType.MERGE
             })
     @JoinTable(
             name = "JOIN_ROOM_EMPLOYEE",
@@ -36,10 +40,26 @@ public class Room {
     @OneToMany(
             targetEntity = Performance.class,
             mappedBy = "room",
-            cascade = CascadeType.ALL,
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
             fetch = FetchType.EAGER
     )
-    private List<Performance> performances = new ArrayList<>();
+    private Set<Performance> performances = new HashSet<>();
+
+    public void addPerformance(Performance performance) {
+        performances.add(performance);
+        performance.setRoom(this);
+    }
+
+    @PreRemove
+    public void removePerformanceAssociations() {
+        for (Performance performance : this.performances) {
+            performance.setRoom(null);
+        }
+    }
+
+    public void removePerformance(Performance performance) {
+        performances.remove(performance);
+    }
 
     public void addEmployee(Employee employee) {
         this.employees.add(employee);
@@ -48,7 +68,7 @@ public class Room {
 
     public void removeEmployee(Employee employee) {
         this.employees.remove(employee);
-        employee.getRooms().add(this);
+        employee.getRooms().remove(this);
     }
 
     public Room(String seats) {
@@ -57,6 +77,12 @@ public class Room {
 
     public Room(Long id, String seats) {
         this.id = id;
+        this.seats = seats;
+    }
+
+    public Room(Long id, String name, String seats) {
+        this.id = id;
+        this.name = name;
         this.seats = seats;
     }
 

@@ -12,18 +12,17 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@RequiredArgsConstructor
 public class RoomForm extends FormLayout {
     private final RoomView roomView;
     private final TextField seats = new TextField("Seats");
+    private final TextField name = new TextField("Name");
     private final Button save = new Button("Save");
     private final Binder<Room> roomBinder = new Binder<>(Room.class);
-    private EmployeeDbService employeeDbService;
+    private final EmployeeDbService employeeDbService;
     private final RoomDbService roomDbService;
     private Set<Employee> selectedEmployees = new HashSet<>();
 
@@ -31,13 +30,14 @@ public class RoomForm extends FormLayout {
         this.roomView = roomView;
         this.employeeDbService = employeeDbService;
         this.roomDbService = roomDbService;
-        HorizontalLayout textFields = new HorizontalLayout(seats, save);
+        HorizontalLayout textFields = new HorizontalLayout(name, seats, save);
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         MultiSelectComboBox<Employee> employeeComboBox = createEmployeeComboBox();
 
         add(textFields, employeeComboBox);
         seats.setWidth("200px");
+        name.setWidth("200px");
 
         roomBinder.bindInstanceFields(this);
         save.getStyle().set("margin-top", "auto");
@@ -63,7 +63,7 @@ public class RoomForm extends FormLayout {
             setVisible(false);
         } else {
             setVisible(true);
-            seats.focus();
+            name.focus();
         }
     }
 
@@ -71,6 +71,7 @@ public class RoomForm extends FormLayout {
         MultiSelectComboBox<Employee> employeeComboBox = new MultiSelectComboBox<>();
         employeeComboBox.setItems(employeeDbService.getAllEmployees());
         employeeComboBox.setAllowCustomValue(true);
+        employeeComboBox.setLabel("Employees");
         employeeComboBox.setItemLabelGenerator(
                 person -> person.getFirstName() + " " + person.getLastName());
         employeeComboBox.addValueChangeListener(event -> {

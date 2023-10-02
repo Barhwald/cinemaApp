@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -21,6 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class PerformanceTestSuite {
 
+    @Autowired
+    private EmployeeDbService employeeDbService;
+    @Autowired
+    private RoomDbService roomDbService;
+    @Autowired
+    private MovieDbService movieDbService;
     @Autowired
     private PerformanceDbService performanceDbService;
     @Autowired
@@ -34,7 +39,7 @@ public class PerformanceTestSuite {
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room("120", Set.of(employee1, employee2));
 
-        Performance performance = new Performance(LocalDateTime.now(), movie, room);
+        Performance performance = new Performance("13-09-2023", "13:45", movie, room);
 
         //When
         performanceDbService.savePerformance(performance);
@@ -52,7 +57,7 @@ public class PerformanceTestSuite {
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room("120", Set.of(employee1, employee2));
 
-        Performance performance = new Performance(LocalDateTime.now(), movie, room);
+        Performance performance = new Performance("13-09-2023", "13:45", movie, room);
 
         //When
         performanceDbService.savePerformance(performance);
@@ -60,7 +65,8 @@ public class PerformanceTestSuite {
 
         //Then
         assertEquals(savedPerformance.getId(), performance.getId());
-        assertEquals(savedPerformance.getDateTime(), performance.getDateTime());
+        assertEquals(savedPerformance.getDate(), performance.getDate());
+        assertEquals(savedPerformance.getTime(), performance.getTime());
         assertEquals(savedPerformance.getMovie(), performance.getMovie());
         assertEquals(savedPerformance.getRoom(), performance.getRoom());
     }
@@ -74,10 +80,18 @@ public class PerformanceTestSuite {
         Room room1 = new Room("120", Set.of(employee1, employee2));
         Room room2 = new Room("78", Set.of(employee2));
 
-        Performance performance1 = new Performance(LocalDateTime.now(), movie, room1);
-        Performance performance2 = new Performance(LocalDateTime.now(), movie, room2);
+        Performance performance1 = new Performance("13-09-2023", "13:45", movie, room1);
+        Performance performance2 = new Performance("13-09-2023", "13:45", movie, room2);
 
         //When
+        employeeDbService.saveEmployee(employee1);
+        employeeDbService.saveEmployee(employee2);
+
+        movieDbService.saveMovie(movie);
+
+        roomDbService.saveRoom(room1);
+        roomDbService.saveRoom(room2);
+
         performanceDbService.savePerformance(performance1);
         performanceDbService.savePerformance(performance2);
         List<Performance> perfList = performanceDbService.getAllPerformances();
@@ -95,7 +109,7 @@ public class PerformanceTestSuite {
         Movie movie = new Movie("The Hill", "Yadadadadada", "1994");
         Room room = new Room("120", Set.of(employee1, employee2));
 
-        Performance performance = new Performance(LocalDateTime.now(), movie, room);
+        Performance performance = new Performance("13-09-2023", "13:45", movie, room);
 
         //When
         performanceDbService.savePerformance(performance);

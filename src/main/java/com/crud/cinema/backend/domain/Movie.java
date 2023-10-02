@@ -1,13 +1,13 @@
 package com.crud.cinema.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@EqualsAndHashCode(exclude = "performances")
+@ToString(exclude = {"performances"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -31,10 +31,26 @@ public class Movie {
     @OneToMany(
             targetEntity = Performance.class,
             mappedBy = "movie",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.EAGER
     )
-    private List<Performance> performances = new ArrayList<>();
+    private Set<Performance> performances = new HashSet<>();
+
+    public void addPerformance(Performance performance) {
+        performances.add(performance);
+        performance.setMovie(this);
+    }
+
+    public void removePerformance(Performance performance) {
+        this.performances.remove(performance);
+    }
+
+    @PreRemove
+    public void removePerformanceAssociations() {
+        for (Performance performance : this.performances) {
+            performance.setMovie(null);
+        }
+    }
 
     public Movie(String title, String description, String year) {
         this.title = title;

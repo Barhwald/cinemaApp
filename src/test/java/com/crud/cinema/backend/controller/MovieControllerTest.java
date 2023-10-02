@@ -1,6 +1,5 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.adapter.LocalDateTimeTypeAdapter;
 import com.crud.cinema.backend.domain.MovieDto;
 import com.crud.cinema.backend.facade.MovieFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -17,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,17 +28,13 @@ class MovieControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private MovieFacade movieFacade;
-    @MockBean
-    private LocalDateTimeTypeAdapter localDateTimeTypeAdapter;
     private Gson gson;
 
     @BeforeEach
     void setUp() {
         gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, localDateTimeTypeAdapter)
                 .create();
     }
 

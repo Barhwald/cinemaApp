@@ -12,13 +12,19 @@ import java.util.Set;
 @NoArgsConstructor
 public class RoomDto {
     private Long id;
+    private String name;
     private String seats;
     private Set<Employee> employees;
-    private List<Performance> performances;
+    private Set<Performance> performances;
 
     public RoomDto(Long id, String seats) {
         this.id = id;
         this.seats = seats;
     }
 
+    public RoomDto(Long id, String name, String seats) {
+        this.id = id;
+        this.name = name;
+        this.seats = seats;
+    }
 }

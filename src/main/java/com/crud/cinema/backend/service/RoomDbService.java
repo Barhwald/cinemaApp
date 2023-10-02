@@ -35,6 +35,12 @@ public class RoomDbService {
                 .collect(Collectors.toSet());
     }
 
+    public Set<Room> getRoomsWithName(String name) {
+        return getAllRooms().stream()
+                .filter(room -> room.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toSet());
+    }
+
     public Set<Room> getRoomsWithSeats(String seats) {
         return getAllRooms().stream()
                 .filter(room -> room.getSeats().contains(seats))

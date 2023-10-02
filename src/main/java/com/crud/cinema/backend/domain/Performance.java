@@ -1,16 +1,15 @@
 package com.crud.cinema.backend.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity(name = "PERFORMANCES")
+@ToString
 public class Performance {
 
     @Id
@@ -18,20 +17,27 @@ public class Performance {
     @Column(name = "PERFORMANCE_ID", unique = true)
     private Long id;
 
-    @Column(name = "DATE_TIME")
-    public LocalDateTime dateTime;
+    @Column(name = "DATE")
+    private String date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "TIME")
+    private String time;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 
-    public Performance(LocalDateTime dateTime, Movie movie, Room room) {
-        this.dateTime = dateTime;
+    public Performance(String date, String time, Movie movie, Room room) {
+        this.date = date;
+        this.time = time;
         this.movie = movie;
         this.room = room;
     }
 }
+
+
+
