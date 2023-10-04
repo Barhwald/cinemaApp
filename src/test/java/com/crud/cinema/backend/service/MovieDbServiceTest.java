@@ -114,7 +114,6 @@ public class MovieDbServiceTest {
         movieDbService.saveMovie(movie2);
         movieDbService.saveMovie(movie11);
         Set<Movie> movieSet = movieDbService.getMoviesWithDescription("their");
-        System.out.println(movieSet.toString());
 
         //Then
         assertEquals(3, movieSet.size());
