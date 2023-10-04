@@ -28,7 +28,7 @@ public class OmdbControllerTest {
     @Test
     void shouldFetchOmdbMovie() throws Exception {
         //Given
-        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Some title", "Some plot", "1969", "4.5");
+        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Some title", "Some plot", "1969");
 
         when(omdbFacade.getOmdbMovieByTitle("title")).thenReturn(omdbMovieDto);
         Gson gson = new Gson();
@@ -44,8 +44,7 @@ public class OmdbControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Title", Matchers.is("Some title")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Plot", Matchers.is("Some plot")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Year", Matchers.is("1969")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.imdbRating", Matchers.is("4.5")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Year", Matchers.is("1969")));
     }
 
 }

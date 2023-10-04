@@ -17,7 +17,7 @@ class OmdbMapperTest {
     @Test
     void shouldMapToMovieDto() {
         //Given
-        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Title", "Desc", "2010", "2.8");
+        OmdbMovieDto omdbMovieDto = new OmdbMovieDto("Title", "Desc", "2010");
 
         //When
         MovieDto movieDto = omdbMapper.maptoMovieDto(omdbMovieDto);

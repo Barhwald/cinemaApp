@@ -17,6 +17,4 @@ public class OmdbMovieDto {
     private String plot;
     @JsonProperty("Year")
     private String year;
-    @JsonProperty("imdbRating")
-    private String imdbRating;
 }

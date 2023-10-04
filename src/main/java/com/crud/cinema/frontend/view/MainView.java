@@ -29,7 +29,6 @@ public class MainView extends VerticalLayout {
                 goToRooms.getUI().ifPresent(ui ->
                         ui.navigate("rooms")));
 
-
         goToPerformances.addClickListener(e ->
                 goToPerformances.getUI().ifPresent(ui ->
                         ui.navigate("performances")));

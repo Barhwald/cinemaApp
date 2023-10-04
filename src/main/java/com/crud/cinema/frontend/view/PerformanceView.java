@@ -127,21 +127,22 @@ public class PerformanceView extends VerticalLayout {
         performanceGrid.setItems(performanceDbService.getPerformancesWithId(filter1.getValue()));
     }
 
-    public void updateRoom() {
+    public void updateMovie() {
+        performanceGrid.setItems(performanceDbService.getPerformancesWithMovie(filter2.getValue()));
+    }
 
+    public void updateRoom() {
+        performanceGrid.setItems(performanceDbService.getPerformancesWithRoom(filter3.getValue()));
     }
 
     public void updateDate() {
-
+        performanceGrid.setItems(performanceDbService.getPerformancesWithDate(filter4.getValue()));
     }
 
     public void updateTime() {
-
+        performanceGrid.setItems(performanceDbService.getPerformancesWithTime(filter5.getValue()));
     }
 
-    public void updateMovie() {
-//        performanceGrid.setItems(performanceDbService.getPerformancesWithMovie(filter2.getValue()));
-    }
 
     private Component createDeleteButton(Performance performance) {
         Button deleteButton = new Button(new Icon(VaadinIcon.TRASH));
@@ -152,6 +153,7 @@ public class PerformanceView extends VerticalLayout {
     private void deletePerformance(Performance performance) {
         performance.setRoom(null);
         performance.setMovie(null);
+        performanceDbService.savePerformance(performance);
         boolean deleted = performanceDbService.deletePerformanceById(performance.getId());
 
         if (deleted) {
