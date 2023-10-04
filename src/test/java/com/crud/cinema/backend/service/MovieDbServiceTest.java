@@ -9,12 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
-public class MovieTestSuite {
+public class MovieDbServiceTest {
 
     @Autowired
     private MovieDbService movieDbService;
@@ -82,5 +83,56 @@ public class MovieTestSuite {
 
         //Then
         assertFalse(optionalMovie.isPresent());
+    }
+
+    @Test
+    void getMoviesWithTitle() {
+        //Given
+        Movie movie1 = new Movie(1L, "The Cause", "s get their home back", "2012");
+        Movie movie2 = new Movie(2L, "The Cheese", "s get their home back", "2012");
+        Movie movie11 = new Movie(11L, "The Choose", "s get their home back", "2012");
+
+        //When
+        movieDbService.saveMovie(movie1);
+        movieDbService.saveMovie(movie2);
+        movieDbService.saveMovie(movie11);
+        Set<Movie> movieSet = movieDbService.getMoviesWithTitle("The Ch");
+
+        //Then
+        assertEquals(2, movieSet.size());
+    }
+
+    @Test
+    void getMoviesWithDescription() {
+        //Given
+        Movie movie1 = new Movie(1L, "The Cause", "s get their home back", "2012");
+        Movie movie2 = new Movie(2L, "The Cheese", "s get their home back", "2012");
+        Movie movie11 = new Movie(11L, "The Choose", "s get their home back", "2012");
+
+        //When
+        movieDbService.saveMovie(movie1);
+        movieDbService.saveMovie(movie2);
+        movieDbService.saveMovie(movie11);
+        Set<Movie> movieSet = movieDbService.getMoviesWithDescription("their");
+
+        //Then
+        assertEquals(3, movieSet.size());
+    }
+
+    @Test
+    void getMoviesWithYear() {
+        //Given
+        Movie movie1 = new Movie(1L, "The Cause", "s get their home back", "2012");
+        Movie movie2 = new Movie(2L, "The Cheese", "s get their home back", "2012");
+        Movie movie11 = new Movie(11L, "The Choose", "s get their home back", "2011");
+
+        //When
+        movieDbService.saveMovie(movie1);
+        movieDbService.saveMovie(movie2);
+        movieDbService.saveMovie(movie11);
+        Set<Movie> movieSet = movieDbService.getMoviesWithYear("2012");
+
+        //Then
+        assertEquals(2, movieSet.size());
     }
 }

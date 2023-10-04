@@ -1,8 +1,7 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.domain.freecurrency.DataPLN;
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyEurToPlnDto;
-import com.crud.cinema.backend.freecurrency.client.facade.FreecurrencyFacade;
+import com.crud.cinema.backend.domain.freecurrency.*;
+import com.crud.cinema.backend.freecurrency.facade.FreecurrencyFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -45,5 +44,29 @@ class FreecurrencyControllerTest {
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.PLN", Matchers.is("4.57")));
+    }
+
+    @Test
+    void shouldFetchStatus() throws Exception {
+        //Given
+        FreecurrencyMonth freecurrencyMonth = new FreecurrencyMonth("2000", "200", "1800");
+        FreecurrencyQuotas freecurrencyQuotas = new FreecurrencyQuotas(freecurrencyMonth);
+        FreecurrencyStatusDto freecurrencyStatusDto = new FreecurrencyStatusDto(freecurrencyQuotas);
+
+        when(freecurrencyFacade.getQuota()).thenReturn(freecurrencyStatusDto);
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(freecurrencyStatusDto);
+
+        //When & Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .get("/v1/freecurrency/status")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.total", Matchers.is("2000")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.used", Matchers.is("200")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.remaining", Matchers.is("1800")));
     }
 }

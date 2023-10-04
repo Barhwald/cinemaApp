@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
-public class PerformanceTestSuite {
+public class PerformanceDbServiceTest {
 
     @Autowired
     private EmployeeDbService employeeDbService;
@@ -120,4 +120,5 @@ public class PerformanceTestSuite {
         //Then
         assertFalse(optionalPerformance.isPresent());
     }
+
 }

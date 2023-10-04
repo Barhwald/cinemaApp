@@ -1,6 +1,6 @@
 package com.crud.cinema.frontend.view;
 
-import com.crud.cinema.backend.freecurrency.client.facade.FreecurrencyFacade;
+import com.crud.cinema.backend.freecurrency.facade.FreecurrencyFacade;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
@@ -51,7 +51,7 @@ public class MainView extends VerticalLayout {
 
         readonlyCurrencyField.setReadOnly(true);
         readonlyCurrencyField.getStyle().set("margin-top", "auto");
-        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln().substring(0,4));
+        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln());
 
         HorizontalLayout currencyWidget = new HorizontalLayout(currencyInfo, readonlyCurrencyField);
         currencyWidget.getStyle().set("margin-left", "auto");

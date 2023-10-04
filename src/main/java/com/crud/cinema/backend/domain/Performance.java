@@ -1,6 +1,7 @@
 package com.crud.cinema.backend.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -23,11 +24,13 @@ public class Performance {
     @Column(name = "TIME")
     private String time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.DELETE})
     @JoinColumn(name = "ROOM_ID")
     private Room room;
 

@@ -23,7 +23,7 @@ public class MovieDbService {
     }
     public Set<Movie> getMoviesWithId(String id) {
         return getAllMovies().stream()
-                .filter(mov -> mov.getId().toString().contains((id)))
+                .filter(mov -> mov.getId().toString().contains(id))
                 .collect(Collectors.toSet());
     }
     public Set<Movie> getMoviesWithTitle(String title) {

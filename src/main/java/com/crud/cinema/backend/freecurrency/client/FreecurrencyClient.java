@@ -1,6 +1,7 @@
 package com.crud.cinema.backend.freecurrency.client;
 
 import com.crud.cinema.backend.domain.freecurrency.FreecurrencyEurToPlnDto;
+import com.crud.cinema.backend.domain.freecurrency.FreecurrencyStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,19 @@ public class FreecurrencyClient {
         FreecurrencyEurToPlnDto freecurrencyResponse = restTemplate.getForObject(url, FreecurrencyEurToPlnDto.class);
 
         return Optional.ofNullable(freecurrencyResponse).orElse(new FreecurrencyEurToPlnDto());
+    }
+
+    public FreecurrencyStatusDto getStatus() {
+        URI url = UriComponentsBuilder.fromHttpUrl(
+                        freecurrencyEndpoint + "v1/status"
+                )
+                .queryParam("apikey", freecurrencyAppkey)
+                .build()
+                .encode()
+                .toUri();
+        FreecurrencyStatusDto freecurrencyResponse = restTemplate.getForObject(url, FreecurrencyStatusDto.class);
+
+        return Optional.ofNullable(freecurrencyResponse).orElse(new FreecurrencyStatusDto());
     }
 
 }

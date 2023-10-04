@@ -91,4 +91,9 @@ public class Room {
         this.employees = employees;
     }
 
+    public Room(String name, String seats, Set<Employee> employees) {
+        this.name = name;
+        this.seats = seats;
+        this.employees = employees;
+    }
 }

@@ -24,9 +24,9 @@ public class EmployeeDbService {
     public List<Employee> getEmployeesWithId(List<Long> ids) {
         return employeeRepository.findAllById(ids);
     }
-    public Set<Employee> getEmployeesWithId(long id) {
+    public Set<Employee> getEmployeesWithId(String id) {
         return getAllEmployees().stream()
-                .filter(emp -> emp.getId().toString().contains(String.valueOf(id)))
+                .filter(emp -> emp.getId().toString().contains(id))
                 .collect(Collectors.toSet());
     }
     public List<Employee> getAllEmployees() {

@@ -96,7 +96,7 @@ public class EmployeeView extends VerticalLayout {
     }
 
     public void updateId() {
-        employeeGrid.setItems(employeeDbService.getEmployeesWithId(Long.parseLong(filter1.getValue())));
+        employeeGrid.setItems(employeeDbService.getEmployeesWithId(filter1.getValue()));
     }
 
     public void updateFirstName() {
@@ -139,4 +139,19 @@ public class EmployeeView extends VerticalLayout {
         return formattedRooms.toString();
     }
 
+    public Grid<Employee> getEmployeeGrid() {
+        return employeeGrid;
+    }
+
+    public TextField getFilter1() {
+        return filter1;
+    }
+
+    public TextField getFilter2() {
+        return filter2;
+    }
+
+    public TextField getFilter3() {
+        return filter3;
+    }
 }

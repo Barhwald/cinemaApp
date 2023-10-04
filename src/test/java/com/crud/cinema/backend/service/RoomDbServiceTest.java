@@ -15,7 +15,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 @SpringBootTest
-public class RoomTestSuite {
+public class RoomDbServiceTest {
 
     @Autowired
     private EmployeeDbService employeeDbService;

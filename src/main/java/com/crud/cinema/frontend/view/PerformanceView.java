@@ -124,7 +124,7 @@ public class PerformanceView extends VerticalLayout {
     }
 
     public void updateId() {
-//        performanceGrid.setItems(performanceDbService.getPerformancesWithId(filter1.getValue()));
+        performanceGrid.setItems(performanceDbService.getPerformancesWithId(filter1.getValue()));
     }
 
     public void updateRoom() {
@@ -168,5 +168,29 @@ public class PerformanceView extends VerticalLayout {
 
     private String formatRoom(Room room) {
         return room == null ? "" : room.getName();
+    }
+
+    public Grid<Performance> getPerformanceGrid() {
+        return performanceGrid;
+    }
+
+    public TextField getFilter1() {
+        return filter1;
+    }
+
+    public TextField getFilter2() {
+        return filter2;
+    }
+
+    public TextField getFilter3() {
+        return filter3;
+    }
+
+    public TextField getFilter4() {
+        return filter4;
+    }
+
+    public TextField getFilter5() {
+        return filter5;
     }
 }

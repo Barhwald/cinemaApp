@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
-public class EmployeeTestSuite {
+public class EmployeeDbServiceTest {
 
     @Autowired
     private EmployeeDbService employeeDbService;
@@ -89,4 +89,44 @@ public class EmployeeTestSuite {
         //Then
         assertFalse(optionalEmployee.isPresent());
     }
+
+    @Test
+    void getEmployeesWithFirstName() {
+        //Given
+        Employee employee1 = new Employee(1L, "Mike", "Done");
+        Employee employee2 = new Employee(2L, "Hakan", "Doner");
+        Employee employee3 = new Employee(3L, "Barbara", "Doie");
+
+        //When
+        employeeDbService.saveEmployee(employee1);
+        employeeDbService.saveEmployee(employee2);
+        employeeDbService.saveEmployee(employee3);
+        Set<Employee> employeeSet = employeeDbService.getEmployeesWithFirstName("Mik");
+
+        //Then
+        assertEquals(1, employeeSet.size());
+        assertEquals("Mike", employeeSet.iterator().next().getFirstName());
+        assertEquals("Done", employeeSet.iterator().next().getLastName());
+    }
+
+    @Test
+    void getEmployeesWithLastName() {
+        //Given
+        Employee employee1 = new Employee(1L, "Mike", "Done");
+        Employee employee2 = new Employee(2L, "Hakan", "Doner");
+        Employee employee3 = new Employee(3L, "Barbara", "Doie");
+
+        //When
+        employeeDbService.saveEmployee(employee1);
+        employeeDbService.saveEmployee(employee2);
+        employeeDbService.saveEmployee(employee3);
+        Set<Employee> employeeSet = employeeDbService.getEmployeesWithLastName("Doner");
+
+        //Then
+        assertEquals(1, employeeSet.size());
+        assertEquals("Hakan", employeeSet.iterator().next().getFirstName());
+        assertEquals("Doner", employeeSet.iterator().next().getLastName());
+    }
+
+
 }

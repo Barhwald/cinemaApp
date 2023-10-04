@@ -14,6 +14,11 @@ public class EmployeeDto {
     private String lastName;
     private Set<Room> rooms;
 
+    public EmployeeDto(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public EmployeeDto(long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;

@@ -171,4 +171,24 @@ public class RoomView extends VerticalLayout {
         formattedEmployees.setLength(formattedEmployees.length() - 2);
         return formattedEmployees.toString();
     }
+
+    public Grid<Room> getRoomGrid() {
+        return roomGrid;
+    }
+
+    public TextField getFilter1() {
+        return filter1;
+    }
+
+    public TextField getFilter2() {
+        return filter2;
+    }
+
+    public TextField getFilter3() {
+        return filter3;
+    }
+
+    public TextField getFilter4() {
+        return filter4;
+    }
 }

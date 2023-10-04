@@ -31,7 +31,7 @@ public class Movie {
     @OneToMany(
             targetEntity = Performance.class,
             mappedBy = "movie",
-            cascade = {CascadeType.ALL},
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.EAGER
     )
     private Set<Performance> performances = new HashSet<>();

@@ -113,7 +113,7 @@ public class MovieView extends VerticalLayout {
         deleteButton.addClickListener(event -> deleteMovie(movie));
         return deleteButton;
     }
-    private void deleteMovie(Movie movie) {
+    void deleteMovie(Movie movie) {
         movie.removePerformanceAssociations();
         List<Performance> iterationList = new ArrayList<>(movie.getPerformances());
 
@@ -128,5 +128,25 @@ public class MovieView extends VerticalLayout {
             Notification.show("Failed to delete the movie.");
         }
         refresh();
+    }
+
+    public Grid<Movie> getMovieGrid() {
+        return movieGrid;
+    }
+
+    public TextField getFilter1() {
+        return filter1;
+    }
+
+    public TextField getFilter2() {
+        return filter2;
+    }
+
+    public TextField getFilter3() {
+        return filter3;
+    }
+
+    public TextField getFilter4() {
+        return filter4;
     }
 }
