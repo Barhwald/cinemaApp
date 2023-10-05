@@ -50,7 +50,7 @@ public class MainView extends VerticalLayout {
 
         readonlyCurrencyField.setReadOnly(true);
         readonlyCurrencyField.getStyle().set("margin-top", "auto");
-        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln());
+        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln().substring(1,4));
 
         HorizontalLayout currencyWidget = new HorizontalLayout(currencyInfo, readonlyCurrencyField);
         currencyWidget.getStyle().set("margin-left", "auto");
