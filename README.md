@@ -1,6 +1,22 @@
 It's a cinema management app written using Spring, Spring Boot for backend and Vaadin for frontend.
 
-Contains these endpoints:
+To run the app follow this guide:
+1. Download the app using git clone to have it locally.
+2. The app has an external database connected so there is no need to set any database on your own.
+3. Simply run the CinemaApplication.java file in your IDE.
+4. The app will open on http://localhost:8080/
+
+-----
+
+The app is built on these 4 core entities:
+Movie, Room, Performance, Employee
+
+Two external APIs are used:
+1. OMDB API
+2. Freecurrency API
+
+-----
+The app contains the following endpoints:
 
 1. GET Fetch all movies
 2. GET Fetch a single movie
