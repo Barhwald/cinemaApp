@@ -14,8 +14,8 @@ public class RoomDto {
     private Long id;
     private String name;
     private String seats;
-    private Set<Employee> employees;
-    private Set<Performance> performances;
+    private Set<Long> employeeIds;
+    private Set<Long> performanceIds;
 
     public RoomDto(Long id, String seats) {
         this.id = id;

@@ -40,32 +40,9 @@ public class EmployeeView extends VerticalLayout {
         this.roomDbService = roomDbService;
         EmployeeForm form = new EmployeeForm(this, employeeDbService, roomDbService);
 
-        filter1.setPlaceholder("Filter by id");
-        filter1.setClearButtonVisible(true);
-        filter1.setValueChangeMode(ValueChangeMode.EAGER);
-        filter1.addValueChangeListener(e -> updateId());
-        filter2.setPlaceholder("Filter by first name");
-        filter2.setClearButtonVisible(true);
-        filter2.setValueChangeMode(ValueChangeMode.EAGER);
-        filter2.addValueChangeListener(e -> updateFirstName());
-        filter3.setPlaceholder("Filter by last name");
-        filter3.setClearButtonVisible(true);
-        filter3.setValueChangeMode(ValueChangeMode.EAGER);
-        filter3.addValueChangeListener(e -> updateLastName());
-
-        employeeGrid.setColumns("id", "firstName", "lastName");
-
-        employeeGrid.addColumn(emp -> formatRooms(emp.getRooms()))
-                .setHeader("Rooms");
-
-        Grid.Column<Employee> deleteColumn = employeeGrid.addColumn(
-                        new ComponentRenderer<>(this::createDeleteButton))
-                .setHeader("Actions");
-        deleteColumn.setWidth("100px");
-
-        goToDashboard.addClickListener(e ->
-                goToDashboard.getUI().ifPresent(ui ->
-                        ui.navigate("")));
+        setFilters();
+        setEmployeeGrid();
+        setGoToDashboard();
 
         addNewEmployee.addClickListener(e -> {
             employeeGrid.asSingleSelect().clear();
@@ -154,4 +131,50 @@ public class EmployeeView extends VerticalLayout {
     public TextField getFilter3() {
         return filter3;
     }
+
+    public void setFilter1() {
+        filter1.setPlaceholder("Filter by id");
+        filter1.setClearButtonVisible(true);
+        filter1.setValueChangeMode(ValueChangeMode.EAGER);
+        filter1.addValueChangeListener(e -> updateId());
+    }
+
+    public void setFilter2() {
+        filter2.setPlaceholder("Filter by first name");
+        filter2.setClearButtonVisible(true);
+        filter2.setValueChangeMode(ValueChangeMode.EAGER);
+        filter2.addValueChangeListener(e -> updateFirstName());
+    }
+
+    public void setFilter3() {
+        filter3.setPlaceholder("Filter by last name");
+        filter3.setClearButtonVisible(true);
+        filter3.setValueChangeMode(ValueChangeMode.EAGER);
+        filter3.addValueChangeListener(e -> updateLastName());
+    }
+
+    public void setFilters() {
+        setFilter1();
+        setFilter2();
+        setFilter3();
+    }
+
+    public void setEmployeeGrid() {
+        employeeGrid.setColumns("id", "firstName", "lastName");
+
+        employeeGrid.addColumn(emp -> formatRooms(emp.getRooms()))
+                .setHeader("Rooms");
+
+        Grid.Column<Employee> deleteColumn = employeeGrid.addColumn(
+                        new ComponentRenderer<>(this::createDeleteButton))
+                .setHeader("Actions");
+        deleteColumn.setWidth("100px");
+    }
+
+    public void setGoToDashboard() {
+        goToDashboard.addClickListener(e ->
+                goToDashboard.getUI().ifPresent(ui ->
+                        ui.navigate("")));
+    }
+
 }

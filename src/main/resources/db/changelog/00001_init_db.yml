@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: michalbylina@oct-7th-2023@14:37:29
+      author: michalbylina
+      objectQuotingStrategy: LEGACY
+      comment: initialization for creating all tables
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: UTF-8
+            path: 00001_init_db.sql
+            relativeToChangelogFile: true

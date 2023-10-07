@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: michalbylina@oct-7th-2023@14:37:29
+      author: michalbylina
+      objectQuotingStrategy: LEGACY
+      comment: add triggers
+      changes:
+        - sqlFile:
+            dbms: mysql
+            encoding: UTF-8
+            path: 00002_add_triggers.sql
+            relativeToChangelogFile: true

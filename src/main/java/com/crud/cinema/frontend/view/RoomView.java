@@ -46,44 +46,9 @@ public class RoomView extends VerticalLayout {
         this.roomDbService = roomDbService;
         RoomForm form = new RoomForm(this, employeeDbService, roomDbService);
 
-        filter1.setPlaceholder("Filter by id");
-        filter1.setClearButtonVisible(true);
-        filter1.setValueChangeMode(ValueChangeMode.EAGER);
-        filter1.addValueChangeListener(e -> updateId());
-        filter2.setPlaceholder("Filter by name");
-        filter2.setClearButtonVisible(true);
-        filter2.setValueChangeMode(ValueChangeMode.EAGER);
-        filter2.addValueChangeListener(e -> updateName());
-        filter3.setPlaceholder("Filter by seats");
-        filter3.setClearButtonVisible(true);
-        filter3.setValueChangeMode(ValueChangeMode.EAGER);
-        filter3.addValueChangeListener(e -> updateSeats());
-        filter4.setPlaceholder("Filter by employees");
-        filter4.setClearButtonVisible(true);
-        filter4.setValueChangeMode(ValueChangeMode.EAGER);
-        filter4.addValueChangeListener(e -> updateEmployees());
-
-        roomGrid.setColumns("id", "name", "seats");
-
-        roomGrid.addColumn(room -> formatEmployees(room.getEmployees()))
-                .setHeader("Employees");
-
-        roomGrid.addColumn(new ComponentRenderer<>(room -> {
-            Set<Performance> performances = room.getPerformances();
-            String formattedPerformances = performances.stream()
-                    .map(perf -> perf.getId().toString())
-                    .collect(Collectors.joining(", "));
-            return new Span(formattedPerformances);
-        })).setHeader("Performances");
-
-        Grid.Column<Room> deleteColumn = roomGrid.addColumn(
-                        new ComponentRenderer<>(this::createDeleteButton))
-                .setHeader("Actions");
-        deleteColumn.setWidth("100px");
-
-        goToDashboard.addClickListener(e ->
-                goToDashboard.getUI().ifPresent(ui ->
-                        ui.navigate("")));
+        setFilters();
+        setRoomGrid();
+        setGoToDashboard();
 
         addNewRoom.addClickListener(e -> {
             roomGrid.asSingleSelect().clear();
@@ -116,6 +81,7 @@ public class RoomView extends VerticalLayout {
     public void updateId() {
         roomGrid.setItems(roomDbService.getRoomsWithId(filter1.getValue()));
     }
+
     public void updateName() {
         roomGrid.setItems(roomDbService.getRoomsWithName(filter2.getValue()));
     }
@@ -191,4 +157,66 @@ public class RoomView extends VerticalLayout {
     public TextField getFilter4() {
         return filter4;
     }
+
+    public void setFilter1() {
+        filter1.setPlaceholder("Filter by id");
+        filter1.setClearButtonVisible(true);
+        filter1.setValueChangeMode(ValueChangeMode.EAGER);
+        filter1.addValueChangeListener(e -> updateId());
+    }
+
+    public void setFilter2() {
+        filter2.setPlaceholder("Filter by name");
+        filter2.setClearButtonVisible(true);
+        filter2.setValueChangeMode(ValueChangeMode.EAGER);
+        filter2.addValueChangeListener(e -> updateName());
+    }
+
+    public void setFilter3() {
+        filter3.setPlaceholder("Filter by seats");
+        filter3.setClearButtonVisible(true);
+        filter3.setValueChangeMode(ValueChangeMode.EAGER);
+        filter3.addValueChangeListener(e -> updateSeats());
+    }
+
+    public void setFilter4() {
+        filter4.setPlaceholder("Filter by employees");
+        filter4.setClearButtonVisible(true);
+        filter4.setValueChangeMode(ValueChangeMode.EAGER);
+        filter4.addValueChangeListener(e -> updateEmployees());
+    }
+
+    public void setFilters() {
+        setFilter1();
+        setFilter2();
+        setFilter3();
+        setFilter4();
+    }
+
+    public void setGoToDashboard() {
+        goToDashboard.addClickListener(e ->
+                goToDashboard.getUI().ifPresent(ui ->
+                        ui.navigate("")));
+    }
+
+    public void setRoomGrid() {
+        roomGrid.setColumns("id", "name", "seats");
+
+        roomGrid.addColumn(room -> formatEmployees(room.getEmployees()))
+                .setHeader("Employees");
+
+        roomGrid.addColumn(new ComponentRenderer<>(room -> {
+            Set<Performance> performances = room.getPerformances();
+            String formattedPerformances = performances.stream()
+                    .map(perf -> perf.getId().toString())
+                    .collect(Collectors.joining(", "));
+            return new Span(formattedPerformances);
+        })).setHeader("Performances");
+
+        Grid.Column<Room> deleteColumn = roomGrid.addColumn(
+                        new ComponentRenderer<>(this::createDeleteButton))
+                .setHeader("Actions");
+        deleteColumn.setWidth("100px");
+    }
+
 }

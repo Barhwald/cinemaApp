@@ -14,7 +14,7 @@ public class PerformanceDto {
     private Long id;
     private String date;
     private String time;
-    private Movie movie;
-    private Room room;
+    private Long movieId;
+    private Long roomId;
 
 }

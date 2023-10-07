@@ -42,32 +42,9 @@ public class MovieView extends VerticalLayout {
         this.omdbService = omdbService;
         MovieForm form = new MovieForm(this, movieDbService, omdbService);
 
-        filter1.setPlaceholder("Filter by id");
-        filter1.setClearButtonVisible(true);
-        filter1.setValueChangeMode(ValueChangeMode.EAGER);
-        filter1.addValueChangeListener(e -> updateId());
-        filter2.setPlaceholder("Filter by title");
-        filter2.setClearButtonVisible(true);
-        filter2.setValueChangeMode(ValueChangeMode.EAGER);
-        filter2.addValueChangeListener(e -> updateTitle());
-        filter3.setPlaceholder("Filter by description");
-        filter3.setClearButtonVisible(true);
-        filter3.setValueChangeMode(ValueChangeMode.EAGER);
-        filter3.addValueChangeListener(e -> updateDescription());
-        filter4.setPlaceholder("Filter by year");
-        filter4.setClearButtonVisible(true);
-        filter4.setValueChangeMode(ValueChangeMode.EAGER);
-        filter4.addValueChangeListener(e -> updateYear());
-        movieGrid.setColumns("id", "title", "description", "year");
-
-        Grid.Column<Movie> deleteColumn = movieGrid.addColumn(
-                        new ComponentRenderer<>(this::createDeleteButton))
-                .setHeader("Delete");
-        deleteColumn.setWidth("100px");
-
-        goToDashboard.addClickListener(e ->
-                goToDashboard.getUI().ifPresent(ui ->
-                        ui.navigate("")));
+        setFilters();
+        setMovieGrid();
+        setGoToDashboard();
 
         addNewMovie.addClickListener(e -> {
             movieGrid.asSingleSelect().clear();
@@ -99,20 +76,25 @@ public class MovieView extends VerticalLayout {
     public void updateId() {
         movieGrid.setItems(movieDbService.getMoviesWithId(filter1.getValue()));
     }
+
     public void updateTitle() {
         movieGrid.setItems(movieDbService.getMoviesWithTitle(filter2.getValue()));
     }
+
     public void updateDescription() {
         movieGrid.setItems(movieDbService.getMoviesWithDescription(filter3.getValue()));
     }
+
     public void updateYear() {
         movieGrid.setItems(movieDbService.getMoviesWithYear(filter4.getValue()));
     }
+
     private Component createDeleteButton(Movie movie) {
         Button deleteButton = new Button(new Icon(VaadinIcon.TRASH));
         deleteButton.addClickListener(event -> deleteMovie(movie));
         return deleteButton;
     }
+
     void deleteMovie(Movie movie) {
         movie.removePerformanceAssociations();
         List<Performance> iterationList = new ArrayList<>(movie.getPerformances());
@@ -148,5 +130,55 @@ public class MovieView extends VerticalLayout {
 
     public TextField getFilter4() {
         return filter4;
+    }
+
+    public void setFilter1() {
+        filter1.setPlaceholder("Filter by id");
+        filter1.setClearButtonVisible(true);
+        filter1.setValueChangeMode(ValueChangeMode.EAGER);
+        filter1.addValueChangeListener(e -> updateId());
+    }
+
+    public void setFilter2() {
+        filter2.setPlaceholder("Filter by title");
+        filter2.setClearButtonVisible(true);
+        filter2.setValueChangeMode(ValueChangeMode.EAGER);
+        filter2.addValueChangeListener(e -> updateTitle());
+    }
+
+    public void setFilter3() {
+        filter3.setPlaceholder("Filter by description");
+        filter3.setClearButtonVisible(true);
+        filter3.setValueChangeMode(ValueChangeMode.EAGER);
+        filter3.addValueChangeListener(e -> updateDescription());
+    }
+
+    public void setFilter4() {
+        filter4.setPlaceholder("Filter by year");
+        filter4.setClearButtonVisible(true);
+        filter4.setValueChangeMode(ValueChangeMode.EAGER);
+        filter4.addValueChangeListener(e -> updateYear());
+    }
+
+    public void setFilters() {
+        setFilter1();
+        setFilter2();
+        setFilter3();
+        setFilter4();
+    }
+
+    public void setMovieGrid() {
+        movieGrid.setColumns("id", "title", "description", "year");
+
+        Grid.Column<Movie> deleteColumn = movieGrid.addColumn(
+                        new ComponentRenderer<>(this::createDeleteButton))
+                .setHeader("Delete");
+        deleteColumn.setWidth("100px");
+    }
+
+    public void setGoToDashboard() {
+        goToDashboard.addClickListener(e ->
+                goToDashboard.getUI().ifPresent(ui ->
+                        ui.navigate("")));
     }
 }

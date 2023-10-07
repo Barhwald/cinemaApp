@@ -19,10 +19,10 @@ public class Room {
     @Column(name = "ROOM_ID", unique = true)
     private Long id;
 
-    @Column(name = "NAME")
+    @Column(name = "ROOM_NAME")
     private String name;
 
-    @Column(name = "SEATS")
+    @Column(name = "ROOM_SEATS")
     private String seats;
 
     @ManyToMany(fetch = FetchType.EAGER,

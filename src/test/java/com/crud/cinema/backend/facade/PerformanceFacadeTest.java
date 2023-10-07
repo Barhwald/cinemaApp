@@ -48,8 +48,10 @@ class PerformanceFacadeTest {
     @Test
     void shouldGetPerformanceWithId() {
         //Given
-        Performance performance1 = new Performance(1L, "10.10.2023", "10:30", new Movie(), new Room());
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", new Movie(), new Room());
+        Movie movie = new Movie(1L, "Title", "Desc", "2002");
+        Room room = new Room(1L, "300");
+        Performance performance1 = new Performance(1L, "10.10.2023", "10:30", movie, room);
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", 1L, 1L);
 
         when(performanceDbService.getPerformanceWithId(1L)).thenReturn(performance1);
         when(performanceMapper.mapToPerformanceDto(performance1)).thenReturn(performanceDto1);
@@ -60,15 +62,15 @@ class PerformanceFacadeTest {
         //Then
         assertEquals("10.10.2023", resultPerformanceDto.getDate());
         assertEquals("10:30", resultPerformanceDto.getTime());
-        assertEquals(new Room(), resultPerformanceDto.getRoom());
-        assertEquals(new Movie(), resultPerformanceDto.getMovie());
     }
 
     @Test
     void shouldCreatePerformance() {
         //Given
-        Performance performance1 = new Performance(1L, "10.10.2023", "10:30", new Movie(), new Room());
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", new Movie(), new Room());
+        Movie movie = new Movie(1L, "Title", "Desc", "2002");
+        Room room = new Room(1L, "300");
+        Performance performance1 = new Performance(1L, "10.10.2023", "10:30", movie, room);
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", 1L, 1L);
 
         when(performanceMapper.mapToPerformance(performanceDto1)).thenReturn(performance1);
 
@@ -83,9 +85,11 @@ class PerformanceFacadeTest {
     @Test
     void shouldUpdatePerformance() {
         //Given
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", new Movie(), new Room());
-        Performance mappedPerformance = new Performance(1L, "10.10.2023", "10:30", new Movie(), new Room());
-        Performance savedPerformance = new Performance(1L, "10.10.2023", "10:30", new Movie(), new Room());
+        Movie movie = new Movie(1L, "Title", "Desc", "2002");
+        Room room = new Room(1L, "300");
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "10.10.2023", "10:30", movie.getId(), room.getId());
+        Performance mappedPerformance = new Performance(1L, "10.10.2023", "10:30", movie, room);
+        Performance savedPerformance = new Performance(1L, "10.10.2023", "10:30", movie, room);
 
         when(performanceMapper.mapToPerformance(performanceDto1)).thenReturn(mappedPerformance);
         when(performanceDbService.savePerformance(mappedPerformance)).thenReturn(savedPerformance);

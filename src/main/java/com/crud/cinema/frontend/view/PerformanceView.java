@@ -41,58 +41,17 @@ public class PerformanceView extends VerticalLayout {
     public PerformanceView(PerformanceDbService performanceDbService,
                            RoomDbService roomDbService,
                            MovieDbService movieDbService) {
-    this.performanceDbService = performanceDbService;
-    this.roomDbService = roomDbService;
-    this.movieDbService = movieDbService;
+        this.performanceDbService = performanceDbService;
+        this.roomDbService = roomDbService;
+        this.movieDbService = movieDbService;
 
-    PerformanceForm form = new PerformanceForm(this, performanceDbService,
-            roomDbService,
-            movieDbService);
+        PerformanceForm form = new PerformanceForm(this, performanceDbService,
+                roomDbService,
+                movieDbService);
 
-        filter1.setPlaceholder("Filter by id");
-        filter1.setClearButtonVisible(true);
-        filter1.setValueChangeMode(ValueChangeMode.EAGER);
-        filter1.addValueChangeListener(e -> updateId());
-
-        filter2.setPlaceholder("Filter by movie");
-        filter2.setClearButtonVisible(true);
-        filter2.setValueChangeMode(ValueChangeMode.EAGER);
-        filter2.addValueChangeListener(e -> updateMovie());
-
-        filter3.setPlaceholder("Filter by room");
-        filter3.setClearButtonVisible(true);
-        filter3.setValueChangeMode(ValueChangeMode.EAGER);
-        filter3.addValueChangeListener(e -> updateRoom());
-
-        filter4.setPlaceholder("Filter by date");
-        filter4.setClearButtonVisible(true);
-        filter4.setValueChangeMode(ValueChangeMode.EAGER);
-        filter4.addValueChangeListener(e -> updateDate());
-
-        filter5.setPlaceholder("Filter by time");
-        filter5.setClearButtonVisible(true);
-        filter5.setValueChangeMode(ValueChangeMode.EAGER);
-        filter5.addValueChangeListener(e -> updateTime());
-
-        performanceGrid.setColumns("id");
-
-        performanceGrid.addColumn(performance -> formatMovie(performance.getMovie()))
-                .setHeader("Movies");
-
-        performanceGrid.addColumn(performance -> formatRoom(performance.getRoom()))
-                .setHeader("Rooms");
-
-        performanceGrid.addColumn("date").setHeader("Date");
-        performanceGrid.addColumn("time").setHeader("Time");
-
-        Grid.Column<Performance> deleteColumn = performanceGrid.addColumn(
-                        new ComponentRenderer<>(this::createDeleteButton))
-                .setHeader("Actions");
-        deleteColumn.setWidth("100px");
-
-        goToDashboard.addClickListener(e ->
-                goToDashboard.getUI().ifPresent(ui ->
-                        ui.navigate("")));
+        setFilters();
+        setPerformanceGrid();
+        setGoToDashboard();
 
         addNewPerformance.addClickListener(e -> {
             performanceGrid.asSingleSelect().clear();
@@ -194,5 +153,72 @@ public class PerformanceView extends VerticalLayout {
 
     public TextField getFilter5() {
         return filter5;
+    }
+
+    public void setFilter1() {
+        filter1.setPlaceholder("Filter by id");
+        filter1.setClearButtonVisible(true);
+        filter1.setValueChangeMode(ValueChangeMode.EAGER);
+        filter1.addValueChangeListener(e -> updateId());
+    }
+
+    public void setFilter2() {
+        filter2.setPlaceholder("Filter by movie");
+        filter2.setClearButtonVisible(true);
+        filter2.setValueChangeMode(ValueChangeMode.EAGER);
+        filter2.addValueChangeListener(e -> updateMovie());
+    }
+
+    public void setFilter3() {
+        filter3.setPlaceholder("Filter by room");
+        filter3.setClearButtonVisible(true);
+        filter3.setValueChangeMode(ValueChangeMode.EAGER);
+        filter3.addValueChangeListener(e -> updateRoom());
+    }
+
+    public void setFilter4() {
+        filter4.setPlaceholder("Filter by date");
+        filter4.setClearButtonVisible(true);
+        filter4.setValueChangeMode(ValueChangeMode.EAGER);
+        filter4.addValueChangeListener(e -> updateDate());
+    }
+
+    public void setFilter5() {
+        filter5.setPlaceholder("Filter by time");
+        filter5.setClearButtonVisible(true);
+        filter5.setValueChangeMode(ValueChangeMode.EAGER);
+        filter5.addValueChangeListener(e -> updateTime());
+    }
+
+    public void setFilters() {
+        setFilter1();
+        setFilter2();
+        setFilter3();
+        setFilter4();
+        setFilter5();
+    }
+
+    public void setPerformanceGrid() {
+        performanceGrid.setColumns("id");
+
+        performanceGrid.addColumn(performance -> formatMovie(performance.getMovie()))
+                .setHeader("Movies");
+
+        performanceGrid.addColumn(performance -> formatRoom(performance.getRoom()))
+                .setHeader("Rooms");
+
+        performanceGrid.addColumn("date").setHeader("Date");
+        performanceGrid.addColumn("time").setHeader("Time");
+
+        Grid.Column<Performance> deleteColumn = performanceGrid.addColumn(
+                        new ComponentRenderer<>(this::createDeleteButton))
+                .setHeader("Actions");
+        deleteColumn.setWidth("100px");
+    }
+
+    public void setGoToDashboard() {
+        goToDashboard.addClickListener(e ->
+                goToDashboard.getUI().ifPresent(ui ->
+                        ui.navigate("")));
     }
 }

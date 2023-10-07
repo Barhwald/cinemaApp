@@ -25,7 +25,7 @@ public class MovieForm extends FormLayout {
     private final TextField year = new TextField("Year");
     private final Button save = new Button("Save");
     private final TextField searchTitle = new TextField("Title");
-    private final Button search = new Button("Search");
+    private final Button search = new Button("Search OMDB");
     private final Binder<Movie> movieBinder = new Binder<>(Movie.class);
     private MovieDbService movieDbService;
     private OmdbService omdbService;

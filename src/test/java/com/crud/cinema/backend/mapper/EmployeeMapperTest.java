@@ -2,19 +2,26 @@ package com.crud.cinema.backend.mapper;
 
 import com.crud.cinema.backend.domain.Employee;
 import com.crud.cinema.backend.domain.EmployeeDto;
+import com.crud.cinema.backend.service.EmployeeDbService;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class EmployeeMapperTest {
 
-    @Autowired
+    @InjectMocks
     private EmployeeMapper employeeMapper;
+
+    @Mock
+    private EmployeeDbService employeeDbService;
 
     @Test
     void shouldMapToEmployee() {
@@ -34,6 +41,7 @@ class EmployeeMapperTest {
     void shouldMapToEmployeeDto() {
         //Given
         Employee employee = new Employee(1L, "Harry", "Jones");
+        when(employeeDbService.getEmployeeWithId(1L)).thenReturn(employee);
 
         //When
         EmployeeDto employeeDto = employeeMapper.mapToEmployeeDto(employee);
@@ -50,16 +58,17 @@ class EmployeeMapperTest {
         Employee employee1 = new Employee(1L, "Harry", "Jones");
         Employee employee2 = new Employee(2L, "Larry", "Jones");
         Employee employee3 = new Employee(3L, "Marry", "Jones");
-        List<Employee> employeeList = List.of(employee1, employee2, employee3);
+        List<Employee> employees = List.of(employee1, employee2, employee3);
+
+        when(employeeDbService.getEmployeeWithId(1L)).thenReturn(employee1);
+        when(employeeDbService.getEmployeeWithId(2L)).thenReturn(employee2);
+        when(employeeDbService.getEmployeeWithId(3L)).thenReturn(employee3);
 
         //When
-        List<EmployeeDto> employeeDtoList = employeeMapper.mapToEmployeeDtoList(employeeList);
+        List<EmployeeDto> employeeDtoList = employeeMapper.mapToEmployeeDtoList(employees);
 
         //Then
         assertEquals(3, employeeDtoList.size());
-        assertEquals("Harry", employeeList.get(0).getFirstName());
-        assertEquals("Larry", employeeList.get(1).getFirstName());
-        assertEquals("Marry", employeeList.get(2).getFirstName());
     }
 
 }

@@ -2,6 +2,8 @@ package com.crud.cinema.backend.mapper;
 
 import com.crud.cinema.backend.domain.Performance;
 import com.crud.cinema.backend.domain.PerformanceDto;
+import com.crud.cinema.backend.service.PerformanceDbService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +12,16 @@ import java.util.stream.Collectors;
 @Service
 public class PerformanceMapper {
 
+    @Autowired
+    private PerformanceDbService performanceDbService;
+
     public Performance mapToPerformance(final PerformanceDto performanceDto) {
         return new Performance(
                 performanceDto.getId(),
                 performanceDto.getDate(),
                 performanceDto.getTime(),
-                performanceDto.getMovie(),
-                performanceDto.getRoom()
+                performanceDbService.getPerformanceWithId(performanceDto.getId()).getMovie(),
+                performanceDbService.getPerformanceWithId(performanceDto.getId()).getRoom()
         );
     }
 
@@ -25,8 +30,8 @@ public class PerformanceMapper {
                 performance.getId(),
                 performance.getDate(),
                 performance.getTime(),
-                performance.getMovie(),
-                performance.getRoom()
+                performance.getMovie().getId(),
+                performance.getRoom().getId()
         );
     }
 

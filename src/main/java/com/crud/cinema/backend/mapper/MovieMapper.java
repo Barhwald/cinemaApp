@@ -24,8 +24,7 @@ public class MovieMapper {
                 movie.getId(),
                 movie.getTitle(),
                 movie.getDescription(),
-                movie.getYear(),
-                movie.getPerformances()
+                movie.getYear()
         );
     }
 

@@ -46,13 +46,13 @@ class PerformanceControllerTest {
     @Test
     void shouldFetchPerformance() throws Exception {
         //Given
-        Movie movie = new Movie("Title", "Desc", "2002");
-        Room room = new Room("800");
+        Movie movie = new Movie(1L, "Title", "Desc", "2002");
+        Room room = new Room(1L, "800");
         PerformanceDto performanceDto = new PerformanceDto(1L,
                 "13.09.2023",
                 "20:30",
-                movie,
-                room
+                movie.getId(),
+                room.getId()
                 );
         System.out.println(performanceDto);
         when(performanceFacade.getPerformanceWithId(1L)).thenReturn(performanceDto);
@@ -69,15 +69,15 @@ class PerformanceControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.date", Matchers.is("13.09.2023")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.time", Matchers.is("20:30")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.movie.title", Matchers.is("Title")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.room.seats", Matchers.is("800")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.movieId", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.roomId", Matchers.is(1)));
     }
 
     @Test
     void shouldFetchAllPerformances() throws Exception {
         //Given
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", new Movie(), new Room());
-        PerformanceDto performanceDto2 = new PerformanceDto(2L, "14.10.2023", "14:45", new Movie(), new Room());
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", 1L, 1L);
+        PerformanceDto performanceDto2 = new PerformanceDto(2L, "14.10.2023", "14:45", 2L, 2L);
         List<PerformanceDto> performanceDtoList = List.of(performanceDto1, performanceDto2);
 
         when(performanceFacade.getPerformancesList()).thenReturn(performanceDtoList);
@@ -99,7 +99,7 @@ class PerformanceControllerTest {
     @Test
     void shouldCreatePerformance() throws Exception {
         //Given
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", new Movie(), new Room());
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", 1L, 2L);
 
         String jsonContent = gson.toJson(performanceDto1);
 
@@ -116,8 +116,8 @@ class PerformanceControllerTest {
     @Test
     void shouldUpdatePerformance() throws Exception {
         //Given
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", new Movie(), new Room());
-        PerformanceDto updatedPerformanceDto1 = new PerformanceDto(1L, "13.10.2024", "20:00", new Movie(), new Room());
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", 1L, 1L);
+        PerformanceDto updatedPerformanceDto1 = new PerformanceDto(1L, "13.10.2024", "20:00", 2L, 2L);
 
         when(performanceFacade.getPerformanceWithId(1L)).thenReturn(performanceDto1);
         when(performanceFacade.updatePerformance(any(PerformanceDto.class))).thenReturn(updatedPerformanceDto1);
@@ -139,7 +139,7 @@ class PerformanceControllerTest {
     @Test
     void shouldDeletePerformance() throws Exception {
         //Given
-        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", new Movie(), new Room());
+        PerformanceDto performanceDto1 = new PerformanceDto(1L, "13.10.2023", "13:45", 1L, 1L);
 
         //When & Then
         doNothing().when(performanceFacade).deletePerformance(performanceDto1.getId());

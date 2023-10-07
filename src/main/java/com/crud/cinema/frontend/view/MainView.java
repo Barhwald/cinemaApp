@@ -22,44 +22,73 @@ public class MainView extends VerticalLayout {
     public MainView(FreecurrencyFacade freecurrencyFacade) {
         this.freecurrencyFacade = freecurrencyFacade;
 
-        goToMovies.addClickListener(e -> goToMovies.getUI().ifPresent(ui ->
-                ui.navigate("movies")));
+        setGoToButtons();
 
-        goToRooms.addClickListener(e ->
-                goToRooms.getUI().ifPresent(ui ->
-                        ui.navigate("rooms")));
-
-        goToPerformances.addClickListener(e ->
-                goToPerformances.getUI().ifPresent(ui ->
-                        ui.navigate("performances")));
-
-        goToEmployees.addClickListener(e ->
-                goToEmployees.getUI().ifPresent(ui ->
-                        ui.navigate("employees")));
-
-        H1 heading = new H1("Cinema Management App"); //Header
+        H1 heading = new H1("Cinema Management App");
         heading.getStyle().set("margin", "auto");
         VerticalLayout header = new VerticalLayout(heading);
 
         HorizontalLayout toolbar = new HorizontalLayout(
                 goToMovies, goToRooms, goToPerformances, goToEmployees); //Toolbar
-        toolbar.getStyle().set("margin-left", "auto");
-        toolbar.getStyle().set("margin-right", "auto");
+        setStyleToToolbar(toolbar);
 
         H3 currencyInfo = new H3("Current EUR to PLN rate: ");
 
-        readonlyCurrencyField.setReadOnly(true);
-        readonlyCurrencyField.getStyle().set("margin-top", "auto");
-        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln().substring(0,4));
+        setStyleToCurrencyField();
 
         HorizontalLayout currencyWidget = new HorizontalLayout(currencyInfo, readonlyCurrencyField);
+        setStyleToCurrencyWidget(currencyWidget);
+
+        add(header, toolbar, currencyWidget);
+        setSizeFull();
+    }
+
+    private void setGoToMovies() {
+        goToMovies.addClickListener(e -> goToMovies.getUI().ifPresent(ui ->
+                ui.navigate("movies")));
+    }
+
+    private void setGoToRooms() {
+        goToRooms.addClickListener(e ->
+                goToRooms.getUI().ifPresent(ui ->
+                        ui.navigate("rooms")));
+    }
+
+    private void setGoToPerformances() {
+        goToPerformances.addClickListener(e ->
+                goToPerformances.getUI().ifPresent(ui ->
+                        ui.navigate("performances")));
+    }
+
+    private void setGoToEmployees() {
+        goToEmployees.addClickListener(e ->
+                goToEmployees.getUI().ifPresent(ui ->
+                        ui.navigate("employees")));
+    }
+
+    private void setGoToButtons() {
+        setGoToMovies();
+        setGoToRooms();
+        setGoToPerformances();
+        setGoToEmployees();
+    }
+
+    private void setStyleToCurrencyWidget(HorizontalLayout currencyWidget) {
         currencyWidget.getStyle().set("margin-left", "auto");
         currencyWidget.getStyle().set("margin-right", "auto");
         currencyWidget.getStyle().set("position", "absolute");
         currencyWidget.getStyle().set("bottom", "0");
+    }
 
-        add(header, toolbar, currencyWidget);
-        setSizeFull();
+    private void setStyleToToolbar(HorizontalLayout toolbar) {
+        toolbar.getStyle().set("margin-left", "auto");
+        toolbar.getStyle().set("margin-right", "auto");
+    }
+
+    private void setStyleToCurrencyField() {
+        readonlyCurrencyField.setReadOnly(true);
+        readonlyCurrencyField.getStyle().set("margin-top", "auto");
+        readonlyCurrencyField.setValue(freecurrencyFacade.getEutToPlnRate().getDataPLN().getPln().substring(0, 4));
     }
 
 }

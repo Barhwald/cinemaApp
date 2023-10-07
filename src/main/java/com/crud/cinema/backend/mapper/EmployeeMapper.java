@@ -2,6 +2,9 @@ package com.crud.cinema.backend.mapper;
 
 import com.crud.cinema.backend.domain.Employee;
 import com.crud.cinema.backend.domain.EmployeeDto;
+import com.crud.cinema.backend.domain.Room;
+import com.crud.cinema.backend.service.EmployeeDbService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +12,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployeeMapper {
+
+    @Autowired
+    private EmployeeDbService employeeDbService;
 
     public Employee mapToEmployee(final EmployeeDto employeeDto) {
         return new Employee(
@@ -23,7 +29,7 @@ public class EmployeeMapper {
                 employee.getId(),
                 employee.getFirstName(),
                 employee.getLastName(),
-                employee.getRooms()
+                employeeDbService.getEmployeeWithId(employee.getId()).getRooms().stream().map(Room::getId).collect(Collectors.toSet())
         );
     }
 

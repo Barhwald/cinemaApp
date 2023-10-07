@@ -2,19 +2,26 @@ package com.crud.cinema.backend.mapper;
 
 import com.crud.cinema.backend.domain.Room;
 import com.crud.cinema.backend.domain.RoomDto;
+import com.crud.cinema.backend.service.RoomDbService;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class RoomMapperTest {
 
-    @Autowired
+    @InjectMocks
     private RoomMapper roomMapper;
+
+    @Mock
+    private RoomDbService roomDbService;
 
     @Test
     void shouldMapToRoom() {
@@ -33,6 +40,7 @@ class RoomMapperTest {
     void shouldMapToRoomDto() {
         //Given
         Room room = new Room(1L, "180");
+        when(roomDbService.getRoomWithId(1L)).thenReturn(room);
 
         //When
         RoomDto roomDto = roomMapper.mapToRoomDto(room);
@@ -50,6 +58,11 @@ class RoomMapperTest {
         Room room3 = new Room(3L, "180");
         Room room4 = new Room(4L, "180");
         List<Room> roomList = List.of(room1, room2, room3, room4);
+
+        when(roomDbService.getRoomWithId(1L)).thenReturn(room1);
+        when(roomDbService.getRoomWithId(2L)).thenReturn(room2);
+        when(roomDbService.getRoomWithId(3L)).thenReturn(room3);
+        when(roomDbService.getRoomWithId(4L)).thenReturn(room4);
 
         //When
         List<RoomDto> roomDtoList = roomMapper.mapToRoomDtoList(roomList);

@@ -57,13 +57,12 @@ public class PerformanceForm extends FormLayout {
 
     private void save() {
         Performance performance = performanceBinder.getBean();
-        performance.setMovie(selectedMovie);
 
+        performance.setMovie(selectedMovie);
         selectedMovie.addPerformance(performance);
 
         performance.setRoom(selectedRoom);
         selectedRoom.addPerformance(performance);
-
 
         performanceDbService.savePerformance(performance);
         performanceView.refresh();
