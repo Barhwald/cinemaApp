@@ -1,7 +1,8 @@
 package com.crud.cinema.backend.mapper;
 
 import com.crud.cinema.backend.domain.MovieDto;
-import com.crud.cinema.backend.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.mapper.OmdbMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

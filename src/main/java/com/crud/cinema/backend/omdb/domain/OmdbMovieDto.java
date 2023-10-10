@@ -1,4 +1,4 @@
-package com.crud.cinema.backend.domain.freecurrency;
+package com.crud.cinema.backend.omdb.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FreecurrencyEurToPlnDto {
-
-    @JsonProperty("data")
-    private DataPLN dataPLN;
-
+public class OmdbMovieDto {
+    @JsonProperty("Title")
+    private String title;
+    @JsonProperty("Plot")
+    private String plot;
+    @JsonProperty("Year")
+    private String year;
 }

@@ -1,4 +1,4 @@
-package com.crud.cinema.backend.scheduler;
+package com.crud.cinema.backend.freecurrency.scheduler;
 
 import com.crud.cinema.backend.freecurrency.facade.FreecurrencyFacade;
 import lombok.Data;

@@ -1,8 +1,8 @@
 package com.crud.cinema.backend.freecurrency.facade;
 
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyEurToPlnDto;
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyStatusDto;
-import com.crud.cinema.backend.service.FreecurrencyService;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyEurToPlnDto;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyStatusDto;
+import com.crud.cinema.backend.freecurrency.service.FreecurrencyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

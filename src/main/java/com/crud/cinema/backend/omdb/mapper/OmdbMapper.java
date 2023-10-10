@@ -1,7 +1,7 @@
-package com.crud.cinema.backend.mapper;
+package com.crud.cinema.backend.omdb.mapper;
 
 import com.crud.cinema.backend.domain.MovieDto;
-import com.crud.cinema.backend.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
 import org.springframework.stereotype.Service;
 
 @Service

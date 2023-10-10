@@ -1,6 +1,6 @@
 package com.crud.cinema.backend.omdb.client;
 
-import com.crud.cinema.backend.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

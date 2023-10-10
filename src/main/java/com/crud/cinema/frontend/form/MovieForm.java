@@ -2,10 +2,10 @@ package com.crud.cinema.frontend.form;
 
 import com.crud.cinema.backend.domain.Movie;
 import com.crud.cinema.backend.domain.MovieDto;
-import com.crud.cinema.backend.domain.OmdbMovieDto;
-import com.crud.cinema.backend.mapper.OmdbMapper;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.mapper.OmdbMapper;
 import com.crud.cinema.backend.service.MovieDbService;
-import com.crud.cinema.backend.service.OmdbService;
+import com.crud.cinema.backend.omdb.service.OmdbService;
 import com.crud.cinema.frontend.view.MovieView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

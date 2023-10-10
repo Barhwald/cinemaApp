@@ -1,8 +1,7 @@
-package com.crud.cinema.backend.controller;
+package com.crud.cinema.backend.freecurrency.controller;
 
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyEurToPlnDto;
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyMonth;
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyQuotas;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyEurToPlnDto;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyMonth;
 import com.crud.cinema.backend.freecurrency.facade.FreecurrencyFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

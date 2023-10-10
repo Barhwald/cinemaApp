@@ -1,7 +1,7 @@
 package com.crud.cinema.backend.freecurrency.client;
 
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyEurToPlnDto;
-import com.crud.cinema.backend.domain.freecurrency.FreecurrencyStatusDto;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyEurToPlnDto;
+import com.crud.cinema.backend.freecurrency.domain.FreecurrencyStatusDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.crud.cinema.backend.domain.freecurrency;
+package com.crud.cinema.backend.freecurrency.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

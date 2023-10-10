@@ -1,6 +1,7 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.domain.freecurrency.*;
+import com.crud.cinema.backend.freecurrency.controller.FreecurrencyController;
+import com.crud.cinema.backend.freecurrency.domain.*;
 import com.crud.cinema.backend.freecurrency.facade.FreecurrencyFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.hamcrest.Matchers;

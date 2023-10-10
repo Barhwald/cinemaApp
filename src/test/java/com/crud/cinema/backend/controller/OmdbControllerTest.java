@@ -1,6 +1,7 @@
 package com.crud.cinema.backend.controller;
 
-import com.crud.cinema.backend.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.controller.OmdbController;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
 import com.crud.cinema.backend.omdb.facade.OmdbFacade;
 import com.nimbusds.jose.shaded.gson.Gson;
 import org.hamcrest.Matchers;

@@ -3,7 +3,7 @@ package com.crud.cinema.frontend.view;
 import com.crud.cinema.backend.domain.Movie;
 import com.crud.cinema.backend.domain.Performance;
 import com.crud.cinema.backend.service.MovieDbService;
-import com.crud.cinema.backend.service.OmdbService;
+import com.crud.cinema.backend.omdb.service.OmdbService;
 import com.crud.cinema.frontend.form.MovieForm;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;

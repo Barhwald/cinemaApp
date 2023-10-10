@@ -1,6 +1,6 @@
-package com.crud.cinema.backend.controller;
+package com.crud.cinema.backend.omdb.controller;
 
-import com.crud.cinema.backend.domain.OmdbMovieDto;
+import com.crud.cinema.backend.omdb.domain.OmdbMovieDto;
 import com.crud.cinema.backend.omdb.facade.OmdbFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
