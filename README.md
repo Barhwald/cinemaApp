@@ -1,4 +1,5 @@
 It's a cinema management app written using Spring, Spring Boot for backend and Vaadin for frontend.
+This application is a monolith, meaning it contains both backend and frontend packages in the same repo.
 
 To run the app follow this guide:
 1. Download the app from this repository using git clone to have it locally.
