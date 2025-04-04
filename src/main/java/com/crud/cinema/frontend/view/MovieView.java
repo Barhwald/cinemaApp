@@ -169,6 +169,8 @@ public class MovieView extends VerticalLayout {
 
     public void setMovieGrid() {
         movieGrid.setColumns("id", "title", "description", "year");
+        movieGrid.getColumnByKey("description")
+                .setTooltipGenerator(Movie::getDescription);
 
         Grid.Column<Movie> deleteColumn = movieGrid.addColumn(
                         new ComponentRenderer<>(this::createDeleteButton))
