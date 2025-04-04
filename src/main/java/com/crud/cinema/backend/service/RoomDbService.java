@@ -15,9 +15,15 @@ public class RoomDbService {
 
     private final RoomRepository roomRepository;
 
-    public Room saveRoom(Room room) {
+    public Room saveRoom(Room room) throws RuntimeException {
+        try {
+            Integer.parseInt(room.getSeats());
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Seats value is not a valid integer: " + room.getSeats(), e);
+        }
         return roomRepository.save(room);
     }
+
     public Room getRoomWithId(long id) {
         return roomRepository.findById(id).isPresent() ? roomRepository.findById(id).get() : null;
     }

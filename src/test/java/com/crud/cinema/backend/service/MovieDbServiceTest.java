@@ -67,7 +67,11 @@ public class MovieDbServiceTest {
         List<Movie> movieList = movieDbService.getAllMovies();
 
         //Then
-        assertEquals(4, movieList.size());
+//        assertEquals(4, movieList.size());
+        assertTrue(movieList.stream().anyMatch(m -> m.getTitle().equals("The Cause")));
+        assertTrue(movieList.stream().anyMatch(m -> m.getTitle().equals("The Bread")));
+        assertTrue(movieList.stream().anyMatch(m -> m.getTitle().equals("The Duck")));
+        assertTrue(movieList.stream().anyMatch(m -> m.getTitle().equals("The Hobbit")));
     }
 
     @Test

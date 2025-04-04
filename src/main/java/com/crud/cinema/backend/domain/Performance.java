@@ -1,7 +1,6 @@
 package com.crud.cinema.backend.domain;
 
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 

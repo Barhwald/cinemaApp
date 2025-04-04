@@ -9,6 +9,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -51,7 +52,12 @@ public class RoomForm extends FormLayout {
             room.addEmployee(employee);
         }
 
-        roomDbService.saveRoom(room);
+        try {
+            roomDbService.saveRoom(room);
+        } catch (RuntimeException ex) {
+            Notification.show("Error: " + ex.getMessage(), 3000, Notification.Position.MIDDLE);
+        }
+
         roomView.refresh();
         setRoom(null);
     }
